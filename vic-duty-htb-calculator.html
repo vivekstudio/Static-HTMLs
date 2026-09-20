@@ -285,6 +285,12 @@
   <p class="stamp">Non-regional Victoria &middot; general rates current as at 10 July 2026</p>
 </header>
 
+<div class="segmented" id="tabs" role="group" aria-label="Calculator" style="margin-top:22px;">
+  <button type="button" data-tab="planner" aria-pressed="true">Purchase planner</button>
+  <button type="button" data-tab="rates" aria-pressed="false">Rate change tracker</button>
+</div>
+
+<div id="tabPlanner">
 <section>
   <h2>1 &middot; The purchase</h2>
 
@@ -432,6 +438,16 @@
   </div>
 
   <div class="flag ok" id="loanFlag" style="margin-top:16px;"></div>
+
+  <h2 style="margin-top:28px;">Where the money goes, year by year</h2>
+  <div class="segmented" id="segPay" role="group" aria-label="Scheme for payment breakdown">
+    <button type="button" data-scheme="htb" aria-pressed="true">Help to Buy</button>
+    <button type="button" data-scheme="hgs" aria-pressed="false">5% Deposit Scheme</button>
+  </div>
+  <div class="scroller">
+    <table class="rates" id="payTable"></table>
+  </div>
+  <div class="flag ok" id="payFlag" style="margin-top:14px;"></div>
 </section>
 
 <section>
@@ -447,6 +463,39 @@
   </div>
 
   <div class="flag ok" id="equityFlag" style="margin-top:14px;"></div>
+</section>
+
+<section>
+  <h2>6 &middot; Your position at a point in time</h2>
+  <div class="field" style="margin-bottom:16px;">
+    <label for="snapYear">Years after settlement <output class="valout" id="outSnapYear">5</output></label>
+    <input type="range" id="snapYear" value="5" min="1" max="40" step="1">
+    <div class="scale"><span>1 yr</span><span id="snapMax">40 yrs</span></div>
+  </div>
+  <div class="cols" id="snapBody"></div>
+  <div class="flag ok" id="snapFlag" style="margin-top:16px;"></div>
+</section>
+
+<section>
+  <h2>7 &middot; When selling pays best</h2>
+  <div class="grid" style="margin-bottom:16px;">
+    <div class="field">
+      <label for="comm">Agent commission <output class="valout" id="outComm">2.2%</output></label>
+      <input type="range" id="comm" value="2.2" min="0" max="4" step="0.1">
+      <div class="scale"><span>0%</span><span>4% of sale price</span></div>
+    </div>
+    <div class="field">
+      <label for="sellCost">Other selling costs <span class="hint">marketing, legals, styling</span></label>
+      <input type="number" id="sellCost" value="6000" min="0" step="500" inputmode="numeric">
+    </div>
+    <div class="field">
+      <label for="rent">Rent you would otherwise pay <span class="hint">per week</span></label>
+      <input type="number" id="rent" value="650" min="0" step="10" inputmode="numeric">
+    </div>
+  </div>
+  <div class="scroller"><table class="rates" id="sellTable"></table></div>
+  <div class="flag ok" id="sellFlag" style="margin-top:14px;"></div>
+  <div class="flag" id="sellWarn" style="margin-top:10px;"></div>
 </section>
 
 <details>
@@ -500,6 +549,67 @@
     <p>Foreign purchaser additional duty (8%), the off-the-plan concession, pensioner concessions, the $10,000 First Home Owner Grant on new homes, land tax, or lender fees. Duty figures are estimates &mdash; the SRO calculator and your conveyancer give the assessable amount.</p>
   </div>
 </details>
+
+</div><!-- /tabPlanner -->
+
+<div id="tabRates" hidden>
+<section>
+  <h2>Variable rate over the life of the loan</h2>
+  <p style="margin:0 0 16px;color:var(--ink-2);font-size:0.92rem;">
+    Your rate will not sit at one number for thirty years. Build a scenario below in quarters: the
+    repayment is recalculated at each change over the remaining term, the way a variable loan actually
+    works. These are scenarios you choose, not forecasts.
+  </p>
+
+  <div class="grid" style="margin-bottom:16px;">
+    <div class="field">
+      <label for="rtLoan">Loan amount</label>
+      <input type="number" id="rtLoan" value="779000" min="0" step="1000" inputmode="numeric">
+    </div>
+    <div class="field">
+      <label for="rtTerm">Term <span class="hint">years</span></label>
+      <input type="number" id="rtTerm" value="30" min="1" max="40" step="1" inputmode="numeric">
+    </div>
+    <div class="field">
+      <label for="rtStart">Starting rate <span class="hint">% p.a.</span></label>
+      <input type="number" id="rtStart" value="6.2" min="0.1" max="20" step="0.1" inputmode="decimal">
+    </div>
+  </div>
+
+  <div class="segmented" id="rtPresets">
+    <button type="button" data-preset="pull">Pull loan from planner</button>
+    <button type="button" data-preset="up2">+0.25% every quarter for 2 yrs</button>
+    <button type="button" data-preset="cycle">Easing cycle, then rises</button>
+    <button type="button" data-preset="clear">Clear</button>
+  </div>
+
+  <div id="rtRows"></div>
+  <button type="button" id="rtAdd" style="font:inherit;font-family:system-ui,sans-serif;font-size:0.85rem;padding:7px 14px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);border-radius:99px;cursor:pointer;margin-top:10px;">+ Add a rate change</button>
+</section>
+
+<section>
+  <h2>What the scenario costs</h2>
+  <div class="cols">
+    <div class="scheme hgs">
+      <h3>Your scenario</h3>
+      <p class="tag" id="rtTagA"></p>
+      <div id="rtBodyA"></div>
+    </div>
+    <div class="scheme htb">
+      <h3>If the rate never moved</h3>
+      <p class="tag" id="rtTagB"></p>
+      <div id="rtBodyB"></div>
+    </div>
+  </div>
+  <div class="flag" id="rtFlag" style="margin-top:16px;"></div>
+
+  <h2 style="margin-top:28px;">Each rate period</h2>
+  <div class="scroller"><table class="rates" id="rtTable"></table></div>
+
+  <h2 style="margin-top:28px;">Sensitivity from today's rate</h2>
+  <div class="scroller"><table class="rates" id="rtSens"></table></div>
+</section>
+</div><!-- /tabRates -->
 
 <footer>
   Estimates only, not financial or legal advice.<br>
@@ -820,20 +930,22 @@
   // period-by-period amortisation, so the offset account can be modelled properly
   function simulate(P, annualRate, freq, pay, off0, offPer, maxPeriods){
     var rP = annualRate / 100 / freq;
-    var bal = P, off = off0, i = 0, totalInterest = 0, stalled = false;
-    var sched = [{bal:bal, off:off}];
+    var bal = P, off = off0, i = 0, totalInterest = 0, totalPaid = 0, stalled = false;
+    var sched = [{bal:bal, off:off, cumInt:0, cumPaid:0}];
     while(bal > 0.005 && i < maxPeriods){
       var charged = Math.max(0, bal - off);     // offset cancels interest dollar for dollar
       var interest = charged * rP;
-      var principal = pay - interest;
-      if(principal <= 0){ stalled = true; break; }
+      if(pay <= interest){ stalled = true; break; }
+      var payment = Math.min(pay, bal + interest);   // final instalment is only what is left
+      bal = Math.max(0, bal - (payment - interest));
       totalInterest += interest;
-      bal = Math.max(0, bal - principal);
+      totalPaid += payment;
       off += offPer;
       i++;
-      sched.push({bal:bal, off:off});
+      sched.push({bal:bal, off:off, cumInt:totalInterest, cumPaid:totalPaid});
     }
-    return {periods:i, totalInterest:totalInterest, sched:sched, offPer:offPer, stalled:stalled};
+    return {periods:i, totalInterest:totalInterest, totalPaid:totalPaid,
+            sched:sched, offPer:offPer, stalled:stalled};
   }
 
   function loanBlock(P, annualRate, years, freq, extra, off0, offMonthly){
@@ -847,7 +959,7 @@
     var sim = simulate(P, annualRate, freq, pay, off0, offPer, 50 * freq);
     var payoffYears = sim.periods / freq;
     var baseInterest = base * years * freq - P;
-    var totalPaid = P + sim.totalInterest;
+    var totalPaid = sim.totalPaid;
     var boosted = (extra > 0 || off0 > 0 || offMonthly > 0);
     var label = freq === 52 ? "Weekly" : (freq === 26 ? "Fortnightly" : "Monthly");
 
@@ -921,7 +1033,215 @@
     lastCtx = {value:value, htbShare:htbShare, htbDep:htbDep, hgsDep:hgsDep,
                htbP:htbP, hgsP:hgsP, a:a, b:b, years:years, rate:rate, growth:growth,
                htbCash:htbCash, hgsCash:hgsCash, useOffset:(off0 > 0 || offAdd > 0)};
+    window.plannerCtx = lastCtx;
     renderEquity();
+    renderPayments();
+    renderSnapshot();
+    renderSell();
+  }
+
+  function yearMarks(L){
+    var horizon = Math.max(lastCtx.years, Math.ceil(L.payoffYears));
+    var m = [0,1,2,3,5,7,10,15,20,25,30,35,40].filter(function(y){ return y < horizon; });
+    m.push(horizon);
+    return m;
+  }
+
+  function schedAt(L, y){
+    var sched = L.sim.sched, last = sched.length - 1;
+    var i = Math.round(y * L.freq);
+    if(i <= last) return sched[i];
+    var e = sched[last];
+    return {bal:0, off:e.off + L.sim.offPer * (i - last), cumInt:e.cumInt, cumPaid:e.cumPaid};
+  }
+
+  function renderPayments(){
+    if(!lastCtx) return;
+    var c = lastCtx, isH = (eqScheme === "htb");
+    var L = isH ? c.a : c.b;
+    var P = isH ? c.htbP : c.hgsP;
+    var marks = yearMarks(L);
+
+    var head = "<tr><th>Year</th><th>Paid that year</th><th>of which interest</th>" +
+      "<th>off the loan</th><th>Paid to date</th><th>Interest to date</th><th>Interest share</th></tr>";
+    var body = "";
+
+    marks.forEach(function(y){
+      if(y === 0) return;
+      var now = schedAt(L, y), prev = schedAt(L, y - 1);
+      var paidYr = now.cumPaid - prev.cumPaid;
+      var intYr  = now.cumInt - prev.cumInt;
+      var prinYr = paidYr - intYr;
+      var shareYr = paidYr > 0 ? (intYr / paidYr * 100) : 0;
+      var barW = Math.max(0, Math.min(100, shareYr));
+      body += "<tr><td>" + y + "</td><td>" + money(paidYr) + "</td><td>" + money(intYr) + "</td>" +
+        "<td>" + money(prinYr) + "</td><td>" + money(now.cumPaid) + "</td><td>" + money(now.cumInt) + "</td>" +
+        '<td><span style="display:inline-block;vertical-align:middle;width:46px;height:7px;background:var(--surface-2);border-radius:4px;overflow:hidden;margin-right:6px;">' +
+        '<span style="display:block;height:100%;width:' + barW.toFixed(0) + '%;background:var(--warn);"></span></span>' +
+        shareYr.toFixed(0) + "%</td></tr>";
+    });
+
+    $("payTable").innerHTML = head + body;
+
+    var y1 = schedAt(L, 1);
+    var crossover = null, run = 0;
+    for(var y = 1; y <= Math.ceil(L.payoffYears); y++){
+      var n = schedAt(L, y), pr = schedAt(L, y - 1);
+      var pd = n.cumPaid - pr.cumPaid, it = n.cumInt - pr.cumInt;
+      if(pd > 0 && it < pd / 2){ crossover = y; break; }
+    }
+
+    $("payFlag").textContent =
+      "In year one you hand over " + money(y1.cumPaid) + " and " + money(y1.cumInt) +
+      " of it is interest, so only " + money(y1.cumPaid - y1.cumInt) + " comes off the loan. " +
+      (crossover
+        ? "Principal does not overtake interest until year " + crossover + ". "
+        : "") +
+      "Across the whole loan you repay " + money(L.sim.totalPaid) + " to borrow " + money(P) +
+      ". Read this beside the equity table: the gap between what you have paid and the equity you hold is the cost of the money.";
+  }
+
+  function renderSnapshot(){
+    if(!lastCtx) return;
+    var c = lastCtx;
+    var maxY = Math.max(c.years, Math.ceil(c.a.payoffYears), Math.ceil(c.b.payoffYears));
+    var sl = $("snapYear");
+    sl.max = maxY;
+    $("snapMax").textContent = maxY + " yrs";
+    var y = Math.min(num("snapYear"), maxY);
+    $("outSnapYear").textContent = y;
+
+    var html = "";
+    [["htb", c.a, c.htbShare, c.htbCash, "Help to Buy"],
+     ["hgs", c.b, 0, c.hgsCash, "5% Deposit Scheme"]].forEach(function(cfg){
+      var key = cfg[0], L = cfg[1], share = cfg[2], settle = cfg[3], name = cfg[4];
+      var s0 = schedAt(L, y);
+      var val = c.value * Math.pow(1 + c.growth, y);
+      var gov = val * share;
+      var eq = val - s0.bal - gov;
+      var repaid = s0.cumPaid;
+      var outOfPocket = settle + repaid;
+      var net = eq + s0.off;
+
+      html += '<div class="scheme ' + key + '"><h3>' + name + '</h3>' +
+        '<p class="tag">Position after ' + y + (y === 1 ? " year" : " years") + '</p><table>' +
+        row("Cash at settlement", money(settle), "sub") +
+        row("Loan repayments since", money(repaid), "sub") +
+        row("Total out of pocket", money(outOfPocket), "hl") +
+        row("&nbsp;", "&nbsp;", "") +
+        row("House worth", money(val), "sub") +
+        row("Less loan owing", money(s0.bal), "sub") +
+        (share > 0 ? row("Less gov't share", money(gov), "sub") : "") +
+        row("Your equity", money(eq), "hl") +
+        (c.useOffset ? row("Cash still in offset", money(s0.off), "sub") +
+                       row("Equity + offset", money(net), "") : "") +
+        row("Interest paid so far", money(s0.cumInt), "sub") +
+        "</table></div>";
+    });
+    $("snapBody").innerHTML = html;
+
+    var L = (eqScheme === "htb") ? c.a : c.b;
+    var settle = (eqScheme === "htb") ? c.htbCash : c.hgsCash;
+    var sN = schedAt(L, y);
+    var valN = c.value * Math.pow(1 + c.growth, y);
+    var eqN = valN - sN.bal - valN * (eqScheme === "htb" ? c.htbShare : 0);
+    var out = settle + sN.cumPaid;
+
+    $("snapFlag").textContent =
+      "On the " + (eqScheme === "htb" ? "Help to Buy" : "5% Deposit") + " path, " + y + " years in you have put " +
+      money(out) + " into this property and hold " + money(eqN) + " of equity in a home worth " + money(valN) + ". " +
+      "The " + money(Math.abs(out - eqN)) + " difference is mostly interest (" + money(sN.cumInt) + ") plus the " +
+      "stamp duty and costs you paid at settlement, which buy you nothing you can sell. " +
+      "Equity here also includes " + money(valN - c.value) + " of assumed price growth, which is a projection, not a certainty.";
+  }
+
+  function renderSell(){
+    if(!lastCtx) return;
+    var c = lastCtx, isH = (eqScheme === "htb");
+    var L = isH ? c.a : c.b;
+    var share = isH ? c.htbShare : 0;
+    var settle = isH ? c.htbCash : c.hgsCash;
+    var comm = num("comm") / 100, other = num("sellCost");
+    var rentWk = num("rent"), rentPaid = 0, breakRent = null;
+    $("outComm").textContent = num("comm").toFixed(1) + "%";
+
+    var horizon = Math.max(c.years, Math.ceil(L.payoffYears));
+    var rows = [], breakEven = null, bestRet = null, bestRetY = null;
+
+    for(var y = 1; y <= horizon; y++){
+      var st = schedAt(L, y);
+      var sale = c.value * Math.pow(1 + c.growth, y);
+      var costs = sale * comm + other;
+      var gov = sale * share;
+      var back = sale - costs - st.bal - gov + st.off;
+      var inCash = settle + st.cumPaid + st.off;
+      var profit = back - inCash;
+      var ret = (inCash > 0 && back > 0) ? (Math.pow(back / inCash, 1 / y) - 1) * 100 : null;
+      rentPaid += rentWk * 52 * Math.pow(1 + c.growth, y - 1);   // rent you did NOT pay by owning
+      var withRent = profit + rentPaid;
+      if(breakEven === null && profit > 0) breakEven = y;
+      if(breakRent === null && withRent > 0) breakRent = y;
+      if(ret !== null && profit > 0 && (bestRet === null || ret > bestRet)){ bestRet = ret; bestRetY = y; }
+      rows.push({y:y, sale:sale, costs:costs, bal:st.bal, gov:gov, back:back, inCash:inCash,
+                 profit:profit, ret:ret, withRent:withRent});
+    }
+
+    var head = "<tr><th>Sell in year</th><th>Sale price</th><th>Selling costs</th><th>Loan payout</th>" +
+      (share > 0 ? "<th>Gov&rsquo;t share</th>" : "") +
+      "<th>Cash back</th><th>Profit on cash</th><th>Rent not paid</th><th>Profit vs renting</th></tr>";
+    var body = "";
+    rows.forEach(function(r){
+      var mark = (r.y === breakRent) ? ' style="font-weight:700;background:var(--accent-soft);"' : "";
+      body += "<tr" + mark + "><td>" + r.y + "</td><td>" + money(r.sale) + "</td><td>" + money(r.costs) + "</td>" +
+        "<td>" + money(r.bal) + "</td>" + (share > 0 ? "<td>" + money(r.gov) + "</td>" : "") +
+        "<td>" + money(r.back) + "</td>" +
+        "<td>" + (r.profit < 0 ? "\u2212" : "") + money(Math.abs(r.profit)) + "</td>" +
+        "<td>" + money(r.withRent - r.profit) + "</td>" +
+        "<td>" + (r.withRent < 0 ? "\u2212" : "") + money(Math.abs(r.withRent)) + "</td></tr>";
+    });
+    $("sellTable").innerHTML = head + body;
+
+    var last = rows[rows.length - 1];
+    $("sellFlag").textContent =
+      "On price growth alone, this only turns a cash profit " +
+      (breakEven ? "if you hold to year " + breakEven + "." : "at no point inside the term.") +
+      " That is the honest arithmetic: at " + (c.growth * 100).toFixed(1) + "% growth against " + c.rate.toFixed(1) +
+      "% interest" + (share > 0 ? " with the government taking " + (share * 100).toFixed(0) + "% of every dollar of growth" : "") +
+      ", the interest bill outruns the price rise. " +
+      (breakRent
+        ? "Counting the rent you are not paying, you are ahead of renting from year " + breakRent +
+          " onward, and by year " + last.y + " that reaches " + money(last.withRent) + ". That, not the sale price, is what owning is actually earning you."
+        : "Even counting rent saved, renting stays ahead across this whole term at these settings.") +
+      " Raise growth above your interest rate and the picture reverses quickly, which is the single assumption doing all the work here.";
+    var unusedFlag =
+      (breakEven
+        ? "At " + (c.growth * 100).toFixed(1) + "% growth you first come out ahead selling in year " + breakEven +
+          ". Before that, selling costs, stamp duty and early interest outweigh the price rise. "
+        : "At " + (c.growth * 100).toFixed(1) + "% growth this never turns a profit within the term. ") +
+      (bestRetY
+        ? "The best return on the cash you tied up is year " + bestRetY + " at " + bestRet.toFixed(1) +
+          "% a year, while the largest dollar profit is always the last row, " + money(last.profit) + " in year " + last.y +
+          ", because compounding keeps running. Those are two different questions and they have two different answers."
+        : "");
+
+    $("sellWarn").textContent =
+      "This is arithmetic on your growth assumption, not a prediction. Set growth to \u22122% and the table inverts. " +
+      "Real prices move in jumps and stalls rather than a smooth curve, so the year you happen to sell matters more than any average suggests. " +
+      "It also ignores that you still need somewhere to live, and your next purchase costs more in the same rising market." +
+      (isH ? " On Help to Buy you must also clear the government share at sale, which is why cash back is so much thinner." : "");
+  }
+
+  function setScheme(s){
+    eqScheme = s;
+    [$("segEquity"), $("segPay")].forEach(function(g){
+      Array.prototype.forEach.call(g.querySelectorAll("button"), function(b){
+        b.setAttribute("aria-pressed", String(b.dataset.scheme === s));
+      });
+    });
+    renderEquity();
+    renderPayments();
+    renderSnapshot();
+    renderSell();
   }
 
   function renderEquity(){
@@ -929,17 +1249,9 @@
     var c = lastCtx, isH = (eqScheme === "htb");
     var L = isH ? c.a : c.b;
     var share = isH ? c.htbShare : 0;
-    var sched = L.sim.sched, last = sched.length - 1;
     var horizon = Math.max(c.years, Math.ceil(L.payoffYears));
-
-    function at(y){
-      var i = Math.round(y * L.freq);
-      if(i <= last) return sched[i];
-      return {bal:0, off:sched[last].off + L.sim.offPer * (i - last)};
-    }
-
-    var marks = [0,1,2,3,5,7,10,15,20,25,30,35,40].filter(function(y){ return y < horizon; });
-    marks.push(horizon);
+    var at = function(y){ return schedAt(L, y); };
+    var marks = yearMarks(L);
 
     var head = "<tr><th>Year</th><th>Property value</th><th>Loan owing</th>" +
       (c.useOffset ? "<th>Offset cash</th>" : "") +
@@ -1001,18 +1313,14 @@
     });
   });
 
-  Array.prototype.forEach.call($("segEquity").querySelectorAll("button"), function(btn){
-    btn.addEventListener("click", function(){
-      eqScheme = btn.dataset.scheme;
-      Array.prototype.forEach.call($("segEquity").querySelectorAll("button"), function(b){
-        b.setAttribute("aria-pressed", String(b === btn));
-      });
-      renderEquity();
+  [$("segEquity"), $("segPay")].forEach(function(g){
+    Array.prototype.forEach.call(g.querySelectorAll("button"), function(btn){
+      btn.addEventListener("click", function(){ setScheme(btn.dataset.scheme); });
     });
   });
 
   // input wiring
-  ["price","land","build","buyer","misc","miscb","htbShare","htbDep","hgsDep","rate","term","growth","extra","offset0","offsetAdd"].forEach(function(id){
+  ["price","land","build","buyer","misc","miscb","htbShare","htbDep","hgsDep","rate","term","growth","extra","offset0","offsetAdd","snapYear","comm","sellCost","rent"].forEach(function(id){
     $(id).addEventListener("input", render);
     $(id).addEventListener("change", render);
   });
@@ -1039,6 +1347,173 @@
   });
 
   render();
+})();
+</script>
+
+<script>
+/* ---- Rate change tracker (independent of the planner) ---- */
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  function money(n){ return "$" + Math.round(isFinite(n)?n:0).toLocaleString("en-AU"); }
+  function money2(n){ return "$" + (isFinite(n)?n:0).toLocaleString("en-AU",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+  function val(id){ var v = parseFloat($(id).value); return isFinite(v) ? v : 0; }
+  function pmt(P, r, n){ if(P<=0||n<=0) return 0; if(r===0) return P/n; return P*r/(1-Math.pow(1+r,-n)); }
+
+  var changes = [];
+
+  // quarters are the working unit: 0.25 of a year
+  function qLabel(y){
+    var q = Math.round(y*4);
+    return "yr " + Math.floor(q/4) + ", Q" + ((q % 4) + 1);
+  }
+
+  // repayment is recalculated over the REMAINING term at each change, as a variable loan does
+  function run(P, startRate, term, list){
+    var n = term*12, bal = P, rate = startRate;
+    var pay = pmt(P, rate/1200, n);
+    var totalInt = 0, totalPaid = 0, m = 0, maxPay = pay, minPay = pay;
+    var sorted = list.slice().sort(function(a,b){ return a.year - b.year; });
+    var idx = 0, segStart = 0, segInt = 0, segRate = rate, segPay = pay, segs = [];
+
+    while(bal > 0.005 && m < n*1.6){
+      while(idx < sorted.length && Math.round(sorted[idx].year*4)*3 === m && m > 0){
+        segs.push({from:segStart/12, to:m/12, rate:segRate, pay:segPay, interest:segInt});
+        rate = sorted[idx].rate;
+        pay = pmt(bal, rate/1200, Math.max(1, n-m));
+        maxPay = Math.max(maxPay, pay); minPay = Math.min(minPay, pay);
+        segStart = m; segInt = 0; segRate = rate; segPay = pay;
+        idx++;
+      }
+      var interest = bal*rate/1200;
+      if(pay <= interest){ break; }
+      var payment = Math.min(pay, bal+interest);
+      bal = Math.max(0, bal-(payment-interest));
+      totalInt += interest; totalPaid += payment; segInt += interest;
+      m++;
+    }
+    segs.push({from:segStart/12, to:m/12, rate:segRate, pay:segPay, interest:segInt});
+    return {segs:segs, totalInterest:totalInt, totalPaid:totalPaid, years:m/12, maxPay:maxPay, minPay:minPay};
+  }
+
+  function rowsHTML(){
+    var h = "";
+    changes.forEach(function(c, i){
+      h += '<div class="grid" style="margin-top:10px;align-items:end;">' +
+        '<div class="field"><label>Change ' + (i+1) + ' &mdash; from <span class="hint">' + qLabel(c.year) + '</span></label>' +
+        '<input type="number" class="rtY" data-i="' + i + '" value="' + c.year + '" min="0.25" max="40" step="0.25"></div>' +
+        '<div class="field"><label>New rate <span class="hint">% p.a.</span></label>' +
+        '<input type="number" class="rtR" data-i="' + i + '" value="' + c.rate + '" min="0.1" max="20" step="0.1"></div>' +
+        '<div class="field"><label>&nbsp;</label><button type="button" class="rtDel" data-i="' + i + '" ' +
+        'style="font:inherit;font-family:system-ui,sans-serif;font-size:0.85rem;padding:9px 14px;border:1px solid var(--line);' +
+        'background:var(--surface-2);color:var(--ink-2);border-radius:7px;cursor:pointer;">Remove</button></div></div>';
+    });
+    $("rtRows").innerHTML = h;
+    Array.prototype.forEach.call($("rtRows").querySelectorAll(".rtY"), function(el){
+      el.addEventListener("input", function(){ changes[+el.dataset.i].year = parseFloat(el.value)||1; draw(); });
+    });
+    Array.prototype.forEach.call($("rtRows").querySelectorAll(".rtR"), function(el){
+      el.addEventListener("input", function(){ changes[+el.dataset.i].rate = parseFloat(el.value)||0.1; draw(); });
+    });
+    Array.prototype.forEach.call($("rtRows").querySelectorAll(".rtDel"), function(el){
+      el.addEventListener("click", function(){ changes.splice(+el.dataset.i,1); rowsHTML(); draw(); });
+    });
+  }
+
+  function tbl(r, P){
+    return "<table>" +
+      "<tr class=\"hl\"><td class=\"k\">Loan amount</td><td class=\"v\">" + money(P) + "</td></tr>" +
+      "<tr><td class=\"k\">Starting repayment</td><td class=\"v\">" + money2(r.segs[0].pay) + "</td></tr>" +
+      "<tr><td class=\"k\">Highest repayment</td><td class=\"v\">" + money2(r.maxPay) + "</td></tr>" +
+      "<tr><td class=\"k\">Lowest repayment</td><td class=\"v\">" + money2(r.minPay) + "</td></tr>" +
+      "<tr class=\"rule\"><td class=\"k\">Total interest</td><td class=\"v\">" + money(r.totalInterest) + "</td></tr>" +
+      "<tr class=\"total\"><td class=\"k\">Total repaid</td><td class=\"v\">" + money(r.totalPaid) + "</td></tr>" +
+    "</table>";
+  }
+
+  function draw(){
+    var P = val("rtLoan"), term = Math.max(1, val("rtTerm")), r0 = val("rtStart");
+    var a = run(P, r0, term, changes);
+    var b = run(P, r0, term, []);
+
+    $("rtTagA").textContent = changes.length + (changes.length === 1 ? " rate change" : " rate changes") + " over " + term + " years";
+    $("rtTagB").textContent = "Flat " + r0.toFixed(2) + "% for the full term";
+    $("rtBodyA").innerHTML = tbl(a, P);
+    $("rtBodyB").innerHTML = tbl(b, P);
+
+    var diff = a.totalInterest - b.totalInterest;
+    $("rtFlag").className = "flag" + (diff <= 0 ? " ok" : "");
+    $("rtFlag").textContent = changes.length === 0
+      ? "Add a rate change above, or try one of the presets, to see what movement costs."
+      : "This scenario costs " + money(Math.abs(diff)) + (diff >= 0 ? " more" : " less") +
+        " in interest than the rate never moving, and your repayment ranges from " + money2(a.minPay) +
+        " to " + money2(a.maxPay) + " a month. Note the repayment is recalculated at each change over the term you have left, " +
+        "so a rise late in the loan moves the repayment less than the same rise early on.";
+
+    var h = "<tr><th>From</th><th>To</th><th>Rate</th><th>Monthly repayment</th><th>Interest in period</th></tr>";
+    a.segs.forEach(function(sg){
+      if(sg.to - sg.from < 0.01) return;
+      h += "<tr><td>" + qLabel(sg.from) + "</td><td>" + qLabel(sg.to) + "</td><td>" + sg.rate.toFixed(2) + "%</td><td>" +
+        money2(sg.pay) + "</td><td>" + money(sg.interest) + "</td></tr>";
+    });
+    $("rtTable").innerHTML = h;
+
+    var sh = "<tr><th>Rate</th><th>Monthly repayment</th><th>Change vs now</th><th>Total interest</th></tr>";
+    [-1,-0.5,0,0.5,1,2,3].forEach(function(d){
+      var rr = r0 + d; if(rr < 0.1) return;
+      var pay = pmt(P, rr/1200, term*12);
+      var basePay = pmt(P, r0/1200, term*12);
+      sh += "<tr" + (d === 0 ? ' style="font-weight:700;"' : "") + "><td>" + rr.toFixed(2) + "%</td><td>" + money2(pay) +
+        "</td><td>" + (d === 0 ? "&mdash;" : (pay>basePay?"+":"\u2212") + money(Math.abs(pay-basePay)) + " /mth") +
+        "</td><td>" + money(pay*term*12 - P) + "</td></tr>";
+    });
+    $("rtSens").innerHTML = sh;
+  }
+
+  ["rtLoan","rtTerm","rtStart"].forEach(function(id){ $(id).addEventListener("input", draw); });
+  $("rtAdd").addEventListener("click", function(){
+    changes.push({year: changes.length ? changes[changes.length-1].year + 0.25 : 0.25, rate: val("rtStart") + 0.25});
+    rowsHTML(); draw();
+  });
+
+  Array.prototype.forEach.call($("rtPresets").querySelectorAll("button"), function(btn){
+    btn.addEventListener("click", function(){
+      var pr = btn.dataset.preset, r0 = val("rtStart");
+      if(pr === "clear"){ changes = []; }
+      else if(pr === "up2"){
+        changes = [];
+        for(var q = 1; q <= 8; q++) changes.push({year: q*0.25, rate: r0 + q*0.25});
+      }
+      else if(pr === "cycle"){
+        changes = [{year:0.5,rate:Math.max(0.5,r0-0.25)},{year:1,rate:Math.max(0.5,r0-0.5)},
+                   {year:1.5,rate:Math.max(0.5,r0-0.75)},{year:3,rate:Math.max(0.5,r0-0.25)},
+                   {year:4.5,rate:r0+0.25},{year:6,rate:r0+0.75}];
+      }
+      else if(pr === "pull"){
+        var c = window.plannerCtx;
+        if(c){
+          $("rtLoan").value = Math.round(c.hgsP);
+          $("rtTerm").value = c.years;
+          $("rtStart").value = c.rate;
+        }
+      }
+      rowsHTML(); draw();
+    });
+  });
+
+  // tab switching
+  Array.prototype.forEach.call($("tabs").querySelectorAll("button"), function(btn){
+    btn.addEventListener("click", function(){
+      var t = btn.dataset.tab;
+      Array.prototype.forEach.call($("tabs").querySelectorAll("button"), function(b){
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+      $("tabPlanner").hidden = (t !== "planner");
+      $("tabRates").hidden = (t !== "rates");
+      window.scrollTo(0,0);
+    });
+  });
+
+  rowsHTML(); draw();
 })();
 </script>
 </body>

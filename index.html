@@ -320,12 +320,8 @@
   var KEY = "static-serves.v1";
 
   var DEFAULTS = [
-    { name: "Page one",     note: "A page served from this same folder.",      url: "/abc.html",             group: "On this server", newTab: false },
-    { name: "Docs",         note: "Notes and reference kept alongside the site.", url: "/docs/index.html",   group: "On this server", newTab: false },
-    { name: "Files",        note: "Directory listing of everything stored here.", url: "/files/",            group: "On this server", newTab: false },
-    { name: "Example service", note: "Opens in a new tab.",                    url: "https://abc.com/asd",   group: "Elsewhere",      newTab: true },
-    { name: "Status",       note: "Uptime and incident history.",              url: "https://status.example.com", group: "Elsewhere", newTab: true },
-    { name: "Source",       note: "Where the code for these pages lives.",     url: "https://github.com",    group: "Elsewhere",      newTab: true }
+    { name: "Self", note: "This page.", url: "#", group: "Links", newTab: false },
+    { name: "FHB Planner", note: "Victorian first home buyer planner", url: "/vic-duty-htb-calculator.html", group: "Links", newTab: false }
   ];
 
   var board   = document.getElementById("board");
