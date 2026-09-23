@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Victorian First Home Buyer Planner &mdash; Duty, Schemes, Repayments &amp; Equity</title>
+<style>
+  :root{
+    --bg:#f6f5f2;
+    --surface:#ffffff;
+    --surface-2:#f0eee9;
+    --ink:#1b1a17;
+    --ink-2:#5d5a52;
+    --ink-3:#8d8980;
+    --line:#dedad2;
+    --accent:#1f5f4f;
+    --accent-soft:#e3efe9;
+    --warn:#8a5a10;
+    --warn-soft:#fbf1dd;
+    --htb:#2d5b8e;
+    --htb-soft:#e6eef7;
+    --radius:10px;
+    box-sizing:border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14150f;
+      --surface:#1e1f19;
+      --surface-2:#262821;
+      --ink:#eceade;
+      --ink-2:#adaa9c;
+      --ink-3:#7c7a6f;
+      --line:#34362c;
+      --accent:#79c4a8;
+      --accent-soft:#1d2e28;
+      --warn:#e0b26a;
+      --warn-soft:#2e2718;
+      --htb:#8fb8e0;
+      --htb-soft:#1a2531;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14150f;
+    --surface:#1e1f19;
+    --surface-2:#262821;
+    --ink:#eceade;
+    --ink-2:#adaa9c;
+    --ink-3:#7c7a6f;
+    --line:#34362c;
+    --accent:#79c4a8;
+    --accent-soft:#1d2e28;
+    --warn:#e0b26a;
+    --warn-soft:#2e2718;
+    --htb:#8fb8e0;
+    --htb-soft:#1a2531;
+  }
+  html{scroll-padding-top: env(safe-area-inset-top, 0px);}
+  *,*::before,*::after{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    font-size:16px;
+    line-height:1.5;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:28px 18px 64px;}
+
+  header h1{
+    font-size:clamp(1.5rem,4.4vw,2.05rem);
+    margin:0 0 6px;
+    letter-spacing:-0.015em;
+    font-weight:600;
+  }
+  header p.sub{margin:0 0 4px;color:var(--ink-2);font-size:0.95rem;}
+  header p.stamp{margin:0;color:var(--ink-3);font-size:0.8rem;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+
+  section{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px;
+    margin-top:22px;
+  }
+  h2{
+    font-size:0.75rem;
+    text-transform:uppercase;
+    letter-spacing:0.13em;
+    color:var(--ink-3);
+    margin:0 0 14px;
+    font-weight:700;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px 16px;}
+  .field{display:flex;flex-direction:column;gap:5px;}
+  .field.hidden{display:none;}
+  label{font-size:0.82rem;color:var(--ink-2);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}
+  label .hint{color:var(--ink-3);font-size:0.75rem;}
+  input[type=number],select{
+    font:inherit;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:0.95rem;
+    padding:9px 10px;
+    border:1px solid var(--line);
+    border-radius:7px;
+    background:var(--surface-2);
+    color:var(--ink);
+    width:100%;
+    min-width:0;
+  }
+  select{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}
+  input:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px;}
+
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;
+    width:100%;background:transparent;margin:6px 0 0;padding:0;height:22px;cursor:pointer;
+  }
+  input[type=range]::-webkit-slider-runnable-track{
+    height:5px;border-radius:99px;background:var(--line);
+  }
+  input[type=range]::-moz-range-track{height:5px;border-radius:99px;background:var(--line);}
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;
+    width:20px;height:20px;margin-top:-7.5px;border-radius:50%;
+    background:var(--accent);border:2px solid var(--surface);
+    box-shadow:0 1px 3px rgba(0,0,0,.28);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:18px;height:18px;border-radius:50%;
+    background:var(--accent);border:2px solid var(--surface);
+    box-shadow:0 1px 3px rgba(0,0,0,.28);
+  }
+  input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:4px;}
+  .valout{
+    float:right;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:0.88rem;font-weight:700;color:var(--accent);
+    font-variant-numeric:tabular-nums;
+  }
+  .scale{
+    display:flex;justify-content:space-between;
+    font-size:0.68rem;color:var(--ink-3);
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    margin-top:-2px;
+  }
+
+  #settingsBar{display:flex;justify-content:space-between;align-items:center;gap:12px;
+    margin-top:18px;flex-wrap:wrap;}
+  #saveNote,#importNote{font-size:0.78rem;color:var(--ink-3);
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}
+  .mini{font:inherit;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:0.82rem;
+    padding:7px 13px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);
+    border-radius:99px;cursor:pointer;display:inline-block;}
+  .mini.strong{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:600;}
+  .mini.danger{color:var(--warn);border-color:color-mix(in srgb, var(--warn) 35%, transparent);}
+  .mini.asbtn{line-height:normal;}
+  .setrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px;}
+  .setnote{font-size:0.88rem;color:var(--ink-2);margin:0 0 14px;}
+  .setlabel{display:block;font-size:0.82rem;color:var(--ink-2);margin-bottom:6px;
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}
+  #jsonBox{width:100%;min-height:110px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:0.75rem;padding:10px;border:1px solid var(--line);border-radius:7px;
+    background:var(--surface-2);color:var(--ink);resize:vertical;margin-bottom:12px;}
+
+  .segmented{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}  .segmented button{
+    font:inherit;
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:0.85rem;
+    padding:7px 14px;
+    border:1px solid var(--line);
+    background:var(--surface-2);
+    color:var(--ink-2);
+    border-radius:99px;
+    cursor:pointer;
+  }
+  .segmented button[aria-pressed="true"]{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:var(--bg);
+    font-weight:600;
+  }
+
+  .duty-hero{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;margin-bottom:12px;}
+  .duty-hero .big{
+    font-size:clamp(1.9rem,6.5vw,2.7rem);
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    letter-spacing:-0.02em;
+    color:var(--accent);
+    font-weight:600;
+  }
+  .duty-hero .lab{color:var(--ink-2);font-size:0.9rem;}
+  .saving{
+    font-size:0.85rem;color:var(--ink-2);
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+
+  .calcline{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:0.82rem;
+    background:var(--surface-2);
+    border-radius:7px;
+    padding:10px 12px;
+    color:var(--ink-2);
+    overflow-x:auto;
+    white-space:pre-wrap;
+    line-height:1.7;
+  }
+
+  .flag{
+    margin-top:12px;
+    padding:10px 12px;
+    border-radius:7px;
+    font-size:0.85rem;
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    background:var(--warn-soft);
+    color:var(--warn);
+    border:1px solid color-mix(in srgb, var(--warn) 25%, transparent);
+  }
+  .flag.ok{background:var(--accent-soft);color:var(--accent);border-color:color-mix(in srgb, var(--accent) 25%, transparent);}
+  .flag.hidden{display:none;}
+
+  .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;}
+  .scheme{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:16px;
+    background:var(--surface);
+  }
+  .scheme h3{
+    margin:0 0 3px;font-size:1.02rem;font-weight:600;
+  }
+  .scheme .tag{
+    font-size:0.75rem;color:var(--ink-3);margin:0 0 14px;
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+  .scheme.htb{border-top:3px solid var(--htb);}
+  .scheme.hgs{border-top:3px solid var(--accent);}
+
+  .stage{margin-bottom:14px;}
+  .stage-title{
+    font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;
+    color:var(--ink-3);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-weight:700;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--line);
+  }
+  table{width:100%;border-collapse:collapse;font-size:0.88rem;}
+  td{padding:5px 0;vertical-align:baseline;}
+  td.k{color:var(--ink-2);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:0.85rem;}
+  td.v{
+    text-align:right;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    white-space:nowrap;
+    font-variant-numeric:tabular-nums;
+  }
+  tr.sub td{color:var(--ink-3);font-size:0.8rem;}
+  tr.rule td{border-top:1px solid var(--line);}
+  tr.hl td{font-weight:700;padding:8px 0;}
+  .htb tr.hl td,.htb tr.hl td.k{background:var(--htb-soft);color:var(--htb);}
+  .hgs tr.hl td,.hgs tr.hl td.k{background:var(--accent-soft);color:var(--accent);}
+  tr.hl td.k{padding-left:9px;border-radius:6px 0 0 6px;font-size:0.85rem;}
+  tr.hl td.v{padding-right:9px;border-radius:0 6px 6px 0;}
+  tr.total td{font-weight:700;padding-top:8px;}
+  tr.total td.v{font-size:1.02rem;}
+  .grandtotal{
+    margin-top:12px;padding:11px 12px;border-radius:7px;
+    display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  }
+  .htb .grandtotal{background:var(--htb-soft);}
+  .hgs .grandtotal{background:var(--accent-soft);}
+  .grandtotal .k{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.09em;font-family:ui-monospace,monospace;font-weight:700;}
+  .grandtotal .v{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:1.25rem;font-weight:700;font-variant-numeric:tabular-nums;}
+  .htb .grandtotal{color:var(--htb);}
+  .hgs .grandtotal{color:var(--accent);}
+
+  details{margin-top:22px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);}
+  summary{
+    cursor:pointer;padding:14px 18px;font-size:0.85rem;color:var(--ink-2);
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+  details[open] summary{border-bottom:1px solid var(--line);}
+  .notes{padding:6px 18px 18px;font-size:0.88rem;color:var(--ink-2);}
+  .notes h4{margin:16px 0 6px;font-size:0.88rem;color:var(--ink);}
+  .notes ul{margin:6px 0;padding-left:20px;}
+  .notes li{margin:4px 0;}
+  .scroller{overflow-x:auto;}
+  .rates{width:100%;border-collapse:collapse;font-size:0.84rem;margin-top:6px;min-width:400px;}
+  .rates th,.rates td{border:1px solid var(--line);padding:6px 9px;text-align:left;}
+  .rates th{background:var(--surface-2);font-family:system-ui,sans-serif;font-size:0.78rem;}
+  .rates td{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.8rem;}
+  a{color:var(--accent);}
+  footer{margin-top:26px;font-size:0.78rem;color:var(--ink-3);text-align:center;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Victorian first home buyer planner</h1>
+  <p class="sub">What the purchase costs, what each scheme lends and contributes, what you repay, and what you actually own as the years pass.</p>
+  <p class="stamp">Non-regional Victoria &middot; general rates current as at 10 July 2026</p>
+</header>
+
+<div id="settingsBar">
+  <span id="saveNote">Figures save automatically in this browser</span>
+  <button type="button" id="btnSettings" class="mini">Settings</button>
+</div>
+
+<section id="settingsPanel" hidden>
+  <h2>Saved figures</h2>
+  <p class="setnote">Everything you enter is kept in this browser only, on this device. Use the file below to carry the same figures to another browser or machine.</p>
+  <div class="setrow">
+    <button type="button" id="btnDownload" class="mini strong">Download figures (.json)</button>
+    <button type="button" id="btnCopy" class="mini">Copy to clipboard</button>
+    <label for="fileImport" class="mini asbtn">Load from file…</label>
+    <input type="file" id="fileImport" accept="application/json,.json" style="display:none;">
+    <button type="button" id="btnReset" class="mini danger">Reset to defaults</button>
+  </div>
+  <label for="jsonBox" class="setlabel">Or copy and paste this text between browsers</label>
+  <textarea id="jsonBox" spellcheck="false"></textarea>
+  <div class="setrow">
+    <button type="button" id="btnApply" class="mini strong">Apply pasted figures</button>
+    <span id="importNote"></span>
+  </div>
+</section>
+
+<div class="segmented" id="tabs" role="group" aria-label="Calculator" style="margin-top:22px;">
+  <button type="button" data-tab="planner" aria-pressed="true">Purchase planner</button>
+  <button type="button" data-tab="rates" aria-pressed="false">Rate change tracker</button>
+</div>
+
+<div id="tabPlanner">
+<section>
+  <h2>1 &middot; The purchase</h2>
+
+  <div class="segmented" id="segType" role="group" aria-label="Purchase type">
+    <button type="button" data-type="existing" aria-pressed="true">Existing property</button>
+    <button type="button" data-type="build" aria-pressed="false">Land + construction</button>
+  </div>
+
+  <div class="grid">
+    <div class="field" id="f-price">
+      <label for="price">Property price</label>
+      <input type="number" id="price" value="820000" min="0" step="1000" inputmode="numeric">
+    </div>
+    <div class="field hidden" id="f-land">
+      <label for="land">Land price</label>
+      <input type="number" id="land" value="420000" min="0" step="1000" inputmode="numeric">
+    </div>
+    <div class="field hidden" id="f-build">
+      <label for="build">Construction contract</label>
+      <input type="number" id="build" value="420000" min="0" step="1000" inputmode="numeric">
+    </div>
+    <div class="field" id="f-uc">
+      <label for="underConstruction" style="display:flex;gap:8px;align-items:flex-start;line-height:1.35;">
+        <input type="checkbox" id="underConstruction" style="width:auto;margin-top:2px;flex:none;">
+        <span>Under construction &mdash; builder selling land + house on one contract</span>
+      </label>
+    </div>
+    <div class="field hidden" id="f-ucval">
+      <label for="ucVal">Dutiable value at contract date <span class="hint">land + work done so far; 0 = nil duty</span></label>
+      <input type="number" id="ucVal" value="0" min="0" step="5000" inputmode="numeric">
+    </div>
+    <div class="field">
+      <label for="buyer">Buyer status</label>
+      <select id="buyer">
+        <option value="fhb" selected>First home buyer</option>
+        <option value="ppr">Owner-occupier, not first home</option>
+        <option value="inv">Investor / other</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="misc">Other costs <span class="hint">conveyancing, searches, fees</span></label>
+      <input type="number" id="misc" value="3730" min="0" step="100" inputmode="numeric">
+    </div>
+    <div class="field hidden" id="f-miscb">
+      <label for="miscb">Other costs at build stage</label>
+      <input type="number" id="miscb" value="0" min="0" step="100" inputmode="numeric">
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>2 &middot; Stamp duty</h2>
+  <div class="duty-hero">
+    <span class="big" id="dutyBig">$0</span>
+    <span class="lab" id="dutyLab">land transfer duty</span>
+  </div>
+  <div class="saving" id="dutySaving"></div>
+  <div class="calcline" id="dutyCalc"></div>
+  <div class="flag hidden" id="dutyFlag"></div>
+</section>
+
+<section>
+  <h2>3 &middot; Scheme comparison</h2>
+  <div class="grid" style="margin-bottom:18px;">
+    <div class="field">
+      <label for="htbShare">Help to Buy equity share <output class="valout" id="outHtbShare">30%</output></label>
+      <input type="range" id="htbShare" value="30" min="5" max="30" step="1">
+      <div class="scale"><span>5%</span><span id="scaleHtbShare">30% max &mdash; established</span></div>
+    </div>
+    <div class="field">
+      <label for="htbDep">Help to Buy deposit <span class="hint">% &mdash; min 2</span></label>
+      <input type="number" id="htbDep" value="2" min="2" max="100" step="0.5" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="hgsDep">5% Deposit Scheme deposit <span class="hint">% &mdash; min 5</span></label>
+      <input type="number" id="hgsDep" value="5" min="2" max="100" step="0.5" inputmode="decimal">
+    </div>
+  </div>
+
+  <div class="cols">
+    <div class="scheme htb">
+      <h3>Help to Buy</h3>
+      <p class="tag" id="htbTag">Shared equity &mdash; government co-owns a share</p>
+      <div id="htbBody"></div>
+      <div class="grandtotal"><span class="k">Total contribution</span><span class="v" id="htbTotal">$0</span></div>
+    </div>
+
+    <div class="scheme hgs">
+      <h3>5% Deposit Scheme</h3>
+      <p class="tag">Formerly the Home Guarantee Scheme &mdash; no LMI, you own 100%</p>
+      <div id="hgsBody"></div>
+      <div class="grandtotal"><span class="k">Total contribution</span><span class="v" id="hgsTotal">$0</span></div>
+    </div>
+  </div>
+
+  <div class="flag hidden" id="capFlag"></div>
+</section>
+
+<section>
+  <h2>4 &middot; Home loan repayments</h2>
+  <div class="grid" style="margin-bottom:18px;">
+    <div class="field">
+      <label for="rate">Interest rate <output class="valout" id="outRate">6.2%</output></label>
+      <input type="range" id="rate" value="6.2" min="1" max="12" step="0.1">
+      <div class="scale"><span>1.0%</span><span>12.0% p.a.</span></div>
+    </div>
+    <div class="field">
+      <label for="term">Loan term <output class="valout" id="outTerm">30 yrs</output></label>
+      <input type="range" id="term" value="30" min="5" max="40" step="1">
+      <div class="scale"><span>5 yrs</span><span>40 yrs</span></div>
+    </div>
+    <div class="field">
+      <label for="growth">Property growth <output class="valout" id="outGrowth">3.0%</output></label>
+      <input type="range" id="growth" value="3" min="-2" max="10" step="0.5">
+      <div class="scale"><span>&minus;2.0%</span><span>10.0% p.a.</span></div>
+    </div>
+  </div>
+
+  <div class="segmented" id="segFreq" role="group" aria-label="Repayment frequency">
+    <button type="button" data-freq="52" aria-pressed="false">Weekly</button>
+    <button type="button" data-freq="26" aria-pressed="false">Fortnightly</button>
+    <button type="button" data-freq="12" aria-pressed="true">Monthly</button>
+  </div>
+
+  <div class="field" style="margin-bottom:18px;">
+    <label for="extra">Extra on top of the minimum, each payment <output class="valout" id="outExtra">$0</output></label>
+    <input type="range" id="extra" value="0" min="0" max="1500" step="25">
+    <div class="scale"><span>$0</span><span id="scaleExtra">$1,500 per month</span></div>
+  </div>
+
+  <div class="grid" style="margin-bottom:18px;">
+    <div class="field">
+      <label for="offset0">Offset starting balance <output class="valout" id="outOffset0">$0</output></label>
+      <input type="range" id="offset0" value="0" min="0" max="250000" step="5000">
+      <div class="scale"><span>$0</span><span>$250,000</span></div>
+    </div>
+    <div class="field">
+      <label for="offsetAdd">Added to offset each month <output class="valout" id="outOffsetAdd">$0</output></label>
+      <input type="range" id="offsetAdd" value="0" min="0" max="3000" step="50">
+      <div class="scale"><span>$0</span><span>$3,000 per month</span></div>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div class="scheme htb">
+      <h3>Help to Buy loan</h3>
+      <p class="tag" id="loanHtbTag"></p>
+      <div id="loanHtbBody"></div>
+    </div>
+    <div class="scheme hgs">
+      <h3>5% Deposit Scheme loan</h3>
+      <p class="tag" id="loanHgsTag"></p>
+      <div id="loanHgsBody"></div>
+    </div>
+  </div>
+
+  <div class="flag ok" id="loanFlag" style="margin-top:16px;"></div>
+
+  <h2 style="margin-top:28px;">Where the money goes, year by year</h2>
+  <div class="segmented" id="segPay" role="group" aria-label="Scheme for payment breakdown">
+    <button type="button" data-scheme="htb" aria-pressed="true">Help to Buy</button>
+    <button type="button" data-scheme="hgs" aria-pressed="false">5% Deposit Scheme</button>
+  </div>
+  <div class="scroller">
+    <table class="rates" id="payTable"></table>
+  </div>
+  <div class="flag ok" id="payFlag" style="margin-top:14px;"></div>
+</section>
+
+<section>
+  <h2>5 &middot; Equity over time</h2>
+
+  <div class="segmented" id="segEquity" role="group" aria-label="Scheme for equity projection">
+    <button type="button" data-scheme="htb" aria-pressed="true">Help to Buy</button>
+    <button type="button" data-scheme="hgs" aria-pressed="false">5% Deposit Scheme</button>
+  </div>
+
+  <div class="scroller">
+    <table class="rates" id="equityTable"></table>
+  </div>
+
+  <div class="flag ok" id="equityFlag" style="margin-top:14px;"></div>
+</section>
+
+<section>
+  <h2>6 &middot; Your position at a point in time</h2>
+  <div class="field" style="margin-bottom:16px;">
+    <label for="snapYear">Years after settlement <output class="valout" id="outSnapYear">5</output></label>
+    <input type="range" id="snapYear" value="5" min="1" max="40" step="1">
+    <div class="scale"><span>1 yr</span><span id="snapMax">40 yrs</span></div>
+  </div>
+  <div class="cols" id="snapBody"></div>
+  <div class="flag ok" id="snapFlag" style="margin-top:16px;"></div>
+</section>
+
+<section>
+  <h2>7 &middot; When selling pays best</h2>
+  <div class="grid" style="margin-bottom:16px;">
+    <div class="field">
+      <label for="comm">Agent commission <output class="valout" id="outComm">2.2%</output></label>
+      <input type="range" id="comm" value="2.2" min="0" max="4" step="0.1">
+      <div class="scale"><span>0%</span><span>4% of sale price</span></div>
+    </div>
+    <div class="field">
+      <label for="sellCost">Other selling costs <span class="hint">marketing, legals, styling</span></label>
+      <input type="number" id="sellCost" value="6000" min="0" step="500" inputmode="numeric">
+    </div>
+    <div class="field">
+      <label for="rent">Rent you would otherwise pay <span class="hint">per week</span></label>
+      <input type="number" id="rent" value="650" min="0" step="10" inputmode="numeric">
+    </div>
+  </div>
+  <div class="scroller"><table class="rates" id="sellTable"></table></div>
+  <div class="flag ok" id="sellFlag" style="margin-top:14px;"></div>
+  <div class="flag" id="sellWarn" style="margin-top:10px;"></div>
+</section>
+
+<details>
+  <summary>Formulas, rates and assumptions &mdash; tap to open</summary>
+  <div class="notes">
+
+    <h4>General duty rates (contracts from 1 July 2021, current at 10 July 2026)</h4>
+    <div class="scroller">
+      <table class="rates">
+        <tr><th>Dutiable value</th><th>Duty</th></tr>
+        <tr><td>$0 – $25,000</td><td>1.4% of value</td></tr>
+        <tr><td>&gt;$25,000 – $130,000</td><td>$350 + 2.4% over $25,000</td></tr>
+        <tr><td>&gt;$130,000 – $960,000</td><td>$2,870 + 6% over $130,000</td></tr>
+        <tr><td>&gt;$960,000 – $2,000,000</td><td>5.5% of the whole value</td></tr>
+        <tr><td>&gt;$2,000,000</td><td>$110,000 + 6.5% over $2,000,000</td></tr>
+      </table>
+    </div>
+
+    <h4>First home buyer exemption and concession</h4>
+    <ul>
+      <li>Dutiable value <strong>$600,000 or less</strong> → duty is nil.</li>
+      <li><strong>$600,001 – $750,000</strong> → sliding concession. The SRO formula is:<br>
+        <code>duty = full duty &times; (dutiable value − 600,000) &divide; 150,000</code><br>
+        So at $675,000 you pay half the full duty; at $700,000 the result is $24,713.</li>
+      <li><strong>Above $750,000</strong> → no concession, full general rates apply. There is no cliff at $750,000: the factor reaches 1.0 exactly there, so duty already equals the full rate. The sting is inside the band, where the marginal rate on each extra dollar of price runs around 23–27%.</li>
+      <li>The concession is worked out on the <em>general</em> rates, not the lower principal-place-of-residence rates.</li>
+    </ul>
+
+    <h4>Principal place of residence concession</h4>
+    <p>For owner-occupiers who are not first home buyers, a lower rate of <code>$2,870 + 5% over $130,000</code> applies, but only up to a dutiable value of $550,000. Above $550,000 everyone pays general rates.</p>
+
+    <h4>Land and construction</h4>
+    <p>Duty is charged on the <strong>land value only</strong>, not the build contract, provided you build and move in within the SRO time limits. That is why a $420,000 block plus a $420,000 build attracts no duty for a first home buyer, even though the finished home is worth $840,000.</p>
+
+    <h4>Buying a part-built home on a single contract</h4>
+    <p>When a builder sells land and house together and the home is not finished at the contract date, Victorian duty is assessed on the value at that date &mdash; the land plus whatever work has been completed &mdash; rather than the finished price. Buy before anything is built and the dutiable value is essentially just the land, which for a first home buyer under $600,000 means nil duty. Tick the switch and enter that contract-date value; leaving it at zero models the nil-duty case. The finished price still drives the loan, the schemes and the resale figures. Your contract of sale and the SRO determine the assessable amount, so treat this as an estimate.</p>
+
+    <h4>Help to Buy</h4>
+    <ul>
+      <li>Government equity share up to <strong>30% for existing homes</strong>, <strong>40% for new builds</strong>. Minimum 2% deposit. No LMI.</li>
+      <li>Victorian price cap: <strong>$950,000</strong> in Melbourne and Geelong; $650,000–$700,000 elsewhere in Victoria.</li>
+      <li>Income test: about $103,000 individual, $165,000 joint or single parent, on the prior year's ATO notice of assessment.</li>
+      <li>The government shares proportionally in any gain or loss when you sell or buy out its share.</li>
+    </ul>
+
+    <h4>5% Deposit Scheme</h4>
+    <ul>
+      <li>Since 1 October 2025: no income caps, no limit on places, and the Victorian price cap lifted to <strong>$950,000</strong> in Melbourne and Geelong ($650,000 elsewhere).</li>
+      <li>The government guarantees part of the loan so no LMI is charged. It is a guarantee, not a grant &mdash; you borrow and repay the full amount.</li>
+      <li>For land and construction on separate contracts, land price plus build cost together must be under the cap.</li>
+    </ul>
+
+    <h4>What this does not cover</h4>
+    <p>Foreign purchaser additional duty (8%), the off-the-plan concession, pensioner concessions, the $10,000 First Home Owner Grant on new homes, land tax, or lender fees. Duty figures are estimates &mdash; the SRO calculator and your conveyancer give the assessable amount.</p>
+  </div>
+</details>
+
+</div><!-- /tabPlanner -->
+
+<div id="tabRates" hidden>
+<section>
+  <h2>Variable rate over the life of the loan</h2>
+  <p style="margin:0 0 16px;color:var(--ink-2);font-size:0.92rem;">
+    Your rate will not sit at one number for thirty years. Build a scenario below in quarters: the
+    repayment is recalculated at each change over the remaining term, the way a variable loan actually
+    works. These are scenarios you choose, not forecasts.
+  </p>
+
+  <div class="grid" style="margin-bottom:16px;">
+    <div class="field">
+      <label for="rtLoan">Loan amount</label>
+      <input type="number" id="rtLoan" value="779000" min="0" step="1000" inputmode="numeric">
+    </div>
+    <div class="field">
+      <label for="rtTerm">Term <span class="hint">years</span></label>
+      <input type="number" id="rtTerm" value="30" min="1" max="40" step="1" inputmode="numeric">
+    </div>
+    <div class="field">
+      <label for="rtStart">Starting rate <span class="hint">% p.a.</span></label>
+      <input type="number" id="rtStart" value="6.2" min="0.1" max="20" step="0.1" inputmode="decimal">
+    </div>
+  </div>
+
+  <div class="segmented" id="rtPresets">
+    <button type="button" data-preset="pull">Pull loan from planner</button>
+    <button type="button" data-preset="up2">+0.25% every quarter for 2 yrs</button>
+    <button type="button" data-preset="cycle">Easing cycle, then rises</button>
+    <button type="button" data-preset="clear">Clear</button>
+  </div>
+
+  <div id="rtRows"></div>
+  <button type="button" id="rtAdd" style="font:inherit;font-family:system-ui,sans-serif;font-size:0.85rem;padding:7px 14px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);border-radius:99px;cursor:pointer;margin-top:10px;">+ Add a rate change</button>
+</section>
+
+<section>
+  <h2>What the scenario costs</h2>
+  <div class="cols">
+    <div class="scheme hgs">
+      <h3>Your scenario</h3>
+      <p class="tag" id="rtTagA"></p>
+      <div id="rtBodyA"></div>
+    </div>
+    <div class="scheme htb">
+      <h3>If the rate never moved</h3>
+      <p class="tag" id="rtTagB"></p>
+      <div id="rtBodyB"></div>
+    </div>
+  </div>
+  <div class="flag" id="rtFlag" style="margin-top:16px;"></div>
+
+  <h2 style="margin-top:28px;">Each rate period</h2>
+  <div class="scroller"><table class="rates" id="rtTable"></table></div>
+
+  <h2 style="margin-top:28px;">Sensitivity from today's rate</h2>
+  <div class="scroller"><table class="rates" id="rtSens"></table></div>
+</section>
+</div><!-- /tabRates -->
+
+<footer>
+  Estimates only, not financial or legal advice.<br>
+  Rates from the State Revenue Office of Victoria; scheme parameters from Housing Australia.
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var mode = "existing";
+
+  function money(n){
+    if(!isFinite(n)) n = 0;
+    return "$" + Math.round(n).toLocaleString("en-AU");
+  }
+  function money2(n){
+    if(!isFinite(n)) n = 0;
+    return "$" + n.toLocaleString("en-AU",{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  function num(id){
+    var v = parseFloat($(id).value);
+    return isFinite(v) ? v : 0;
+  }
+
+  // SRO Victoria general rates, contracts from 1 July 2021
+  function generalDuty(v){
+    if(v <= 0) return 0;
+    if(v <= 25000)   return v * 0.014;
+    if(v <= 130000)  return 350 + (v - 25000) * 0.024;
+    if(v <= 960000)  return 2870 + (v - 130000) * 0.06;
+    if(v <= 2000000) return v * 0.055;
+    return 110000 + (v - 2000000) * 0.065;
+  }
+
+  // PPR concessional rate, only bites between 130k and 550k
+  function pprDuty(v){
+    if(v > 130000 && v <= 550000) return 2870 + (v - 130000) * 0.05;
+    return generalDuty(v);
+  }
+
+  // Returns {duty, full, workings, band}
+  function dutyFor(v, buyer){
+    var full = generalDuty(v);
+    if(buyer === "fhb"){
+      if(v <= 600000){
+        return {duty:0, full:full, band:"exempt",
+          workings:"Dutiable value " + money(v) + " is at or under $600,000.\nFirst home buyer exemption applies in full.\n\nDuty payable = $0"};
+      }
+      if(v <= 750000){
+        var factor = (v - 600000) / 150000;
+        var d = full * factor;
+        return {duty:d, full:full, band:"concession",
+          workings:
+            "Step 1  full duty at general rates\n" +
+            "        " + bandLine(v) + "\n" +
+            "        = " + money2(full) + "\n\n" +
+            "Step 2  first home buyer concession\n" +
+            "        duty = full \u00d7 (value \u2212 600,000) \u00f7 150,000\n" +
+            "        = " + money2(full) + " \u00d7 (" + money(v) + " \u2212 $600,000) \u00f7 $150,000\n" +
+            "        = " + money2(full) + " \u00d7 " + (factor).toFixed(4) + "\n\n" +
+            "Duty payable = " + money2(d)};
+      }
+      return {duty:full, full:full, band:"full",
+        workings:
+          "Dutiable value " + money(v) + " is above $750,000, so no first home concession applies.\n\n" +
+          bandLine(v) + "\n\nDuty payable = " + money2(full)};
+    }
+    if(buyer === "ppr"){
+      var p = pprDuty(v);
+      if(v > 130000 && v <= 550000){
+        return {duty:p, full:full, band:"ppr",
+          workings:
+            "Principal place of residence rate applies (value is between $130,000 and $550,000).\n\n" +
+            "        $2,870 + 5% \u00d7 (" + money(v) + " \u2212 $130,000)\n" +
+            "        = " + money2(p) + "\n\nDuty payable = " + money2(p)};
+      }
+      return {duty:p, full:full, band:"full",
+        workings:
+          (v > 550000 ? "Above $550,000 the PPR concession no longer applies, so general rates are used.\n\n" : "") +
+          bandLine(v) + "\n\nDuty payable = " + money2(p)};
+    }
+    return {duty:full, full:full, band:"full",
+      workings: bandLine(v) + "\n\nDuty payable = " + money2(full)};
+  }
+
+  function bandLine(v){
+    if(v <= 0) return "        no dutiable value";
+    if(v <= 25000)   return "        1.4% \u00d7 " + money(v);
+    if(v <= 130000)  return "        $350 + 2.4% \u00d7 (" + money(v) + " \u2212 $25,000)";
+    if(v <= 960000)  return "        $2,870 + 6% \u00d7 (" + money(v) + " \u2212 $130,000)";
+    if(v <= 2000000) return "        5.5% \u00d7 " + money(v) + "   (flat rate band)";
+    return "        $110,000 + 6.5% \u00d7 (" + money(v) + " \u2212 $2,000,000)";
+  }
+
+  function row(k, v, cls){
+    return "<tr" + (cls ? ' class="' + cls + '"' : "") + "><td class=\"k\">" + k + "</td><td class=\"v\">" + v + "</td></tr>";
+  }
+
+  function stageBlock(title, rows){
+    return '<div class="stage"><div class="stage-title">' + title + '</div><table>' + rows + "</table></div>";
+  }
+
+  function render(){
+    $("outHtbShare").textContent = num("htbShare") + "%";
+    $("outRate").textContent = num("rate").toFixed(1) + "%";
+    $("outTerm").textContent = num("term") + " yrs";
+    $("outGrowth").textContent = num("growth").toFixed(1) + "%";
+    $("outExtra").textContent = money(num("extra"));
+    $("outOffset0").textContent = money(num("offset0"));
+    $("outOffsetAdd").textContent = money(num("offsetAdd"));
+
+    var buyer   = $("buyer").value;
+    var misc    = num("misc");
+    var miscB   = num("miscb");
+    var htbShare= num("htbShare") / 100;
+    var htbDep  = num("htbDep") / 100;
+    var hgsDep  = num("hgsDep") / 100;
+
+    var price, landVal, buildVal, dutiable, capBase;
+    if(mode === "existing"){
+      price = num("price");
+      var uc = $("underConstruction").checked;
+      dutiable = uc ? num("ucVal") : price;   // part-built: duty is on value at contract date
+      capBase = price;
+      landVal = price; buildVal = 0;
+    } else {
+      landVal  = num("land");
+      buildVal = num("build");
+      dutiable = landVal;             // duty is on the land only
+      capBase  = landVal + buildVal;
+    }
+
+    var res = dutyFor(dutiable, buyer);
+    var duty = res.duty;
+
+    // ---- duty panel ----
+    $("dutyBig").textContent = money(duty);
+    $("dutyLab").textContent = (mode === "build")
+      ? "on the land value of " + money(landVal)
+      : ($("underConstruction").checked
+          ? "on a contract-date dutiable value of " + money(dutiable) + ", not the " + money(price) + " price"
+          : "on a dutiable value of " + money(dutiable));
+    $("dutyCalc").textContent = res.workings;
+
+    var saveMsg = "";
+    if(buyer === "fhb" && res.full > duty){
+      saveMsg = "Saving of " + money(res.full - duty) + " against the full rate of " + money(res.full) + ".";
+    } else if(buyer === "ppr" && res.full > duty){
+      saveMsg = "PPR concession saves " + money(res.full - duty) + " against the general rate.";
+    }
+    $("dutySaving").textContent = saveMsg;
+
+    // cliff warning
+    var flag = $("dutyFlag");
+    flag.className = "flag hidden";
+    if(buyer === "fhb" && dutiable > 600000 && dutiable <= 750000){
+      var step = dutyFor(Math.min(dutiable + 1000, 750000), buyer).duty - duty;
+      flag.className = "flag";
+      flag.textContent = "Inside the concession band the duty climbs steeply: roughly " + money(Math.abs(step)) +
+        " more duty for every extra $1,000 of price, because the price and the concession factor rise together. " +
+        "At $750,000 the concession is worth nothing at all.";
+    } else if(buyer === "fhb" && dutiable > 750000 && dutiable < 900000){
+      var at600 = 0, at750 = generalDuty(750000);
+      flag.className = "flag";
+      flag.textContent = "Above $750,000 there is no first home relief. For reference, duty at $750,000 is " +
+        money(at750) + " and at $600,000 it is nil.";
+    } else if(buyer === "fhb" && dutiable <= 600000 && dutiable > 0){
+      flag.className = "flag ok";
+      flag.textContent = "Fully exempt. The general rate would otherwise have been " + money(res.full) + ".";
+    }
+
+    // ---- scheme panels ----
+    var htbPct = Math.round(htbShare * 1000) / 10;
+    var htbLoanPct = Math.round((1 - htbShare - htbDep) * 1000) / 10;
+    $("htbTag").textContent = "Government takes " + htbPct + "% equity · you borrow " + htbLoanPct + "% · deposit " +
+      (Math.round(htbDep * 1000) / 10) + "%";
+
+    var htbHTML = "", hgsHTML = "", htbTotal = 0, hgsTotal = 0;
+
+    if(mode === "existing"){
+      var totalCost = price + duty + misc;
+
+      var hEq = price * htbShare;
+      var hLoan = price * (1 - htbShare - htbDep);
+      var hContrib = totalCost - hEq - hLoan;
+      htbTotal = hContrib;
+
+      htbHTML = "<table>" +
+        row("Property", money(price)) +
+        row("Stamp duty", money(duty), "sub") +
+        row("Other costs", money(misc), "sub") +
+        row("Total costs", money(totalCost), "rule") +
+        row("Government contributes " + htbPct + "%", money(hEq), "hl") +
+        row("Bank loan " + htbLoanPct + "%", money(hLoan), "hl") +
+        "</table>";
+
+      var gLoan = price * (1 - hgsDep);
+      var gContrib = totalCost - gLoan;
+      hgsTotal = gContrib;
+
+      hgsHTML = "<table>" +
+        row("Property", money(price)) +
+        row("Stamp duty", money(duty), "sub") +
+        row("Other costs", money(misc), "sub") +
+        row("Total costs", money(totalCost), "rule") +
+        row("Government contributes", "Nil \u2014 guarantee only", "hl") +
+        row("Bank loan " + (Math.round((1 - hgsDep) * 1000) / 10) + "%", money(gLoan), "hl") +
+        "</table>";
+
+    } else {
+      var landCost = landVal + duty + misc;
+      var buildCost = buildVal + miscB;
+
+      // Help to Buy — land stage
+      var hLandEq = landVal * htbShare;
+      var hLandLoan = landVal * (1 - htbShare - htbDep);
+      var hLandContrib = landCost - hLandEq - hLandLoan;
+      // Help to Buy — construction stage
+      var hBuildEq = buildVal * htbShare;
+      var hBuildLoan = buildVal * (1 - htbShare - htbDep);
+      var hBuildContrib = buildCost - hBuildEq - hBuildLoan;
+      htbTotal = hLandContrib + hBuildContrib;
+
+      htbHTML =
+        stageBlock("Land",
+          row("Land", money(landVal)) +
+          row("Stamp duty", money(duty), "sub") +
+          row("Other costs", money(misc), "sub") +
+          row("Total", money(landCost), "rule") +
+          row("Government contributes " + htbPct + "%", money(hLandEq), "hl") +
+          row("Bank loan " + htbLoanPct + "%", money(hLandLoan), "hl") +
+          row("Contribution", money(hLandContrib), "total rule")
+        ) +
+        stageBlock("Construction",
+          row("Construction", money(buildVal)) +
+          (miscB ? row("Other costs", money(miscB), "sub") : "") +
+          row("Government contributes " + htbPct + "%", money(hBuildEq), "hl") +
+          row("Bank loan " + htbLoanPct + "%", money(hBuildLoan), "hl") +
+          row("Contribution", money(hBuildContrib), "total rule")
+        );
+
+      var gLandLoan = landVal * (1 - hgsDep);
+      var gLandContrib = landCost - gLandLoan;
+      var gBuildLoan = buildVal * (1 - hgsDep);
+      var gBuildContrib = buildCost - gBuildLoan;
+      hgsTotal = gLandContrib + gBuildContrib;
+
+      var lvrLabel = (Math.round((1 - hgsDep) * 1000) / 10) + "%";
+      hgsHTML =
+        stageBlock("Land",
+          row("Land", money(landVal)) +
+          row("Stamp duty", money(duty), "sub") +
+          row("Other costs", money(misc), "sub") +
+          row("Total", money(landCost), "rule") +
+          row("Government contributes", "Nil \u2014 guarantee", "hl") +
+          row("Bank loan " + lvrLabel, money(gLandLoan), "hl") +
+          row("Contribution", money(gLandContrib), "total rule")
+        ) +
+        stageBlock("Construction",
+          row("Construction", money(buildVal)) +
+          (miscB ? row("Other costs", money(miscB), "sub") : "") +
+          row("Bank loan " + lvrLabel, money(gBuildLoan), "hl") +
+          row("Contribution", money(gBuildContrib), "total rule")
+        );
+    }
+
+    $("htbBody").innerHTML = htbHTML;
+    $("hgsBody").innerHTML = hgsHTML;
+    $("htbTotal").textContent = money(htbTotal);
+    $("hgsTotal").textContent = money(hgsTotal);
+
+    // price cap flag
+    var cap = $("capFlag");
+    cap.className = "flag hidden";
+    if(capBase > 950000){
+      cap.className = "flag";
+      cap.textContent = "At " + money(capBase) + " you are over the $950,000 Victorian price cap that applies to both " +
+        "schemes in Melbourne and Geelong, so neither would be available on this purchase." +
+        (mode === "build" ? " For land and construction, the cap is tested on land plus build combined." : "");
+    } else if(capBase > 0){
+      var diff = htbTotal - hgsTotal;
+      cap.className = "flag ok";
+      cap.textContent = diff < 0
+        ? "Help to Buy needs " + money(Math.abs(diff)) + " less cash up front, in exchange for the government holding a " +
+          htbPct + "% share of the property and of any future capital gain."
+        : "The 5% Deposit Scheme needs " + money(Math.abs(diff)) + " less cash up front here, and you keep 100% of the property.";
+    }
+
+    renderLoan(capBase, htbShare, htbDep, hgsDep, htbTotal, hgsTotal);
+  }
+
+  // ---------- loan + equity ----------
+  var eqScheme = "htb";
+  var freq = 12;
+  var lastCtx = null;
+
+  function pmt(P, ratePerPeriod, periods){
+    if(P <= 0 || periods <= 0) return 0;
+    if(ratePerPeriod === 0) return P / periods;
+    return P * ratePerPeriod / (1 - Math.pow(1 + ratePerPeriod, -periods));
+  }
+
+  // balance remaining after m monthly payments
+  function balanceAfter(P, r, pay, m){
+    if(P <= 0) return 0;
+    if(r === 0) return Math.max(0, P - pay * m);
+    var f = Math.pow(1 + r, m);
+    return Math.max(0, P * f - pay * (f - 1) / r);
+  }
+
+  // months to repay when overpaying
+  function monthsToRepay(P, r, pay){
+    if(P <= 0) return 0;
+    if(pay <= P * r) return Infinity;
+    if(r === 0) return P / pay;
+    return -Math.log(1 - P * r / pay) / Math.log(1 + r);
+  }
+
+  // period-by-period amortisation, so the offset account can be modelled properly
+  function simulate(P, annualRate, freq, pay, off0, offPer, maxPeriods){
+    var rP = annualRate / 100 / freq;
+    var bal = P, off = off0, i = 0, totalInterest = 0, totalPaid = 0, stalled = false;
+    var sched = [{bal:bal, off:off, cumInt:0, cumPaid:0}];
+    while(bal > 0.005 && i < maxPeriods){
+      var charged = Math.max(0, bal - off);     // offset cancels interest dollar for dollar
+      var interest = charged * rP;
+      if(pay <= interest){ stalled = true; break; }
+      var payment = Math.min(pay, bal + interest);   // final instalment is only what is left
+      bal = Math.max(0, bal - (payment - interest));
+      totalInterest += interest;
+      totalPaid += payment;
+      off += offPer;
+      i++;
+      sched.push({bal:bal, off:off, cumInt:totalInterest, cumPaid:totalPaid});
+    }
+    return {periods:i, totalInterest:totalInterest, totalPaid:totalPaid,
+            sched:sched, offPer:offPer, stalled:stalled};
+  }
+
+  function loanBlock(P, annualRate, years, freq, extra, off0, offMonthly){
+    var mins = {};
+    [52, 26, 12].forEach(function(f){
+      mins[f] = pmt(P, annualRate / 100 / f, years * f);
+    });
+    var base = mins[freq];
+    var pay = base + extra;
+    var offPer = offMonthly * 12 / freq;
+    var sim = simulate(P, annualRate, freq, pay, off0, offPer, 50 * freq);
+    var payoffYears = sim.periods / freq;
+    var baseInterest = base * years * freq - P;
+    var totalPaid = sim.totalPaid;
+    var boosted = (extra > 0 || off0 > 0 || offMonthly > 0);
+    var label = freq === 52 ? "Weekly" : (freq === 26 ? "Fortnightly" : "Monthly");
+
+    var html = "<table>" +
+      row("Loan amount", money(P), "hl") +
+      row("Weekly", money2(mins[52]), freq === 52 ? "" : "sub") +
+      row("Fortnightly", money2(mins[26]), freq === 26 ? "" : "sub") +
+      row("Monthly", money2(mins[12]), freq === 12 ? "" : "sub") +
+      row("Yearly total", money(mins[12] * 12), "rule") +
+      (extra > 0 ? row(label + " with extra", money2(pay), "") : "") +
+      (boosted
+        ? row("Paid off in", payoffYears.toFixed(1) + " yrs", "rule") +
+          row("Interest saved", money(baseInterest - sim.totalInterest), "") +
+          row("vs " + years + "-yr minimum", money(baseInterest), "sub")
+        : "") +
+      row("Interest over " + payoffYears.toFixed(1) + " yrs", money(sim.totalInterest), "sub") +
+      row("Total repaid", money(totalPaid), "total rule") +
+    "</table>";
+
+    return {
+      mins: mins, base: base, pay: pay, rP: annualRate / 100 / freq, freq: freq,
+      sim: sim, payoffYears: payoffYears, baseInterest: baseInterest,
+      monthly: mins[12], yearly: mins[12] * 12,
+      totalPaid: totalPaid, totalInterest: sim.totalInterest,
+      html: html
+    };
+  }
+
+  function renderLoan(value, htbShare, htbDep, hgsDep, htbCash, hgsCash){
+    var rate = num("rate"), years = Math.max(1, num("term")), growth = num("growth") / 100;
+    var extra = num("extra"), off0 = num("offset0"), offAdd = num("offsetAdd");
+    var htbP = value * (1 - htbShare - htbDep);
+    var hgsP = value * (1 - hgsDep);
+
+    var a = loanBlock(htbP, rate, years, freq, extra, off0, offAdd);
+    var b = loanBlock(hgsP, rate, years, freq, extra, off0, offAdd);
+
+    $("loanHtbTag").textContent = "Borrowing " + (Math.round((1 - htbShare - htbDep) * 1000) / 10) + "% of " + money(value);
+    $("loanHgsTag").textContent = "Borrowing " + (Math.round((1 - hgsDep) * 1000) / 10) + "% of " + money(value);
+    $("loanHtbBody").innerHTML = a.html;
+    $("loanHgsBody").innerHTML = b.html;
+
+    var diffM = b.mins[12] - a.mins[12];
+    var msg = "At " + rate.toFixed(1) + "% the Help to Buy loan costs " + money2(Math.abs(diffM)) + " " +
+      (diffM >= 0 ? "less" : "more") + " per month than the 5% Deposit Scheme loan, and " +
+      money(Math.abs(b.totalInterest - a.totalInterest)) + " " +
+      (b.totalInterest >= a.totalInterest ? "less" : "more") + " in interest overall. ";
+
+    if(off0 > 0 || offAdd > 0){
+      msg += "The offset saves " + money(b.baseInterest - b.totalInterest) +
+        " of interest on the 5% Deposit loan and brings it forward to " + b.payoffYears.toFixed(1) +
+        " years, while the money stays yours and stays available. " +
+        "Every dollar sitting in the offset earns you " + rate.toFixed(1) +
+        "% tax-free, which beats a savings account paying the same rate before tax.";
+    } else if(extra > 0){
+      msg += "Adding " + money(extra) + " to each " +
+        (freq === 52 ? "weekly" : freq === 26 ? "fortnightly" : "monthly") +
+        " payment clears the 5% Deposit loan in " + b.payoffYears.toFixed(1) +
+        " years instead of " + years + ".";
+    } else {
+      var accel = monthsToRepay(hgsP, rate / 100 / 26, b.mins[12] / 2);
+      var savedY = years - accel / 26;
+      if(isFinite(savedY) && savedY > 0){
+        msg += "Separately: paying half the monthly amount every fortnight (" + money2(b.mins[12] / 2) +
+          ") rather than the true fortnightly figure clears the 5% Deposit loan about " +
+          savedY.toFixed(1) + " years early, because that is 26 half-payments a year rather than 24.";
+      }
+    }
+    $("loanFlag").textContent = msg;
+
+    lastCtx = {value:value, htbShare:htbShare, htbDep:htbDep, hgsDep:hgsDep,
+               htbP:htbP, hgsP:hgsP, a:a, b:b, years:years, rate:rate, growth:growth,
+               htbCash:htbCash, hgsCash:hgsCash, useOffset:(off0 > 0 || offAdd > 0)};
+    window.plannerCtx = lastCtx;
+    renderEquity();
+    renderPayments();
+    renderSnapshot();
+    renderSell();
+  }
+
+  function yearMarks(L){
+    var horizon = Math.max(lastCtx.years, Math.ceil(L.payoffYears));
+    var m = [0,1,2,3,5,7,10,15,20,25,30,35,40].filter(function(y){ return y < horizon; });
+    m.push(horizon);
+    return m;
+  }
+
+  function schedAt(L, y){
+    var sched = L.sim.sched, last = sched.length - 1;
+    var i = Math.round(y * L.freq);
+    if(i <= last) return sched[i];
+    var e = sched[last];
+    return {bal:0, off:e.off + L.sim.offPer * (i - last), cumInt:e.cumInt, cumPaid:e.cumPaid};
+  }
+
+  function renderPayments(){
+    if(!lastCtx) return;
+    var c = lastCtx, isH = (eqScheme === "htb");
+    var L = isH ? c.a : c.b;
+    var P = isH ? c.htbP : c.hgsP;
+    var marks = yearMarks(L);
+
+    var head = "<tr><th>Year</th><th>Paid that year</th><th>of which interest</th>" +
+      "<th>off the loan</th><th>Paid to date</th><th>Interest to date</th><th>Interest share</th></tr>";
+    var body = "";
+
+    marks.forEach(function(y){
+      if(y === 0) return;
+      var now = schedAt(L, y), prev = schedAt(L, y - 1);
+      var paidYr = now.cumPaid - prev.cumPaid;
+      var intYr  = now.cumInt - prev.cumInt;
+      var prinYr = paidYr - intYr;
+      var shareYr = paidYr > 0 ? (intYr / paidYr * 100) : 0;
+      var barW = Math.max(0, Math.min(100, shareYr));
+      body += "<tr><td>" + y + "</td><td>" + money(paidYr) + "</td><td>" + money(intYr) + "</td>" +
+        "<td>" + money(prinYr) + "</td><td>" + money(now.cumPaid) + "</td><td>" + money(now.cumInt) + "</td>" +
+        '<td><span style="display:inline-block;vertical-align:middle;width:46px;height:7px;background:var(--surface-2);border-radius:4px;overflow:hidden;margin-right:6px;">' +
+        '<span style="display:block;height:100%;width:' + barW.toFixed(0) + '%;background:var(--warn);"></span></span>' +
+        shareYr.toFixed(0) + "%</td></tr>";
+    });
+
+    $("payTable").innerHTML = head + body;
+
+    var y1 = schedAt(L, 1);
+    var crossover = null, run = 0;
+    for(var y = 1; y <= Math.ceil(L.payoffYears); y++){
+      var n = schedAt(L, y), pr = schedAt(L, y - 1);
+      var pd = n.cumPaid - pr.cumPaid, it = n.cumInt - pr.cumInt;
+      if(pd > 0 && it < pd / 2){ crossover = y; break; }
+    }
+
+    $("payFlag").textContent =
+      "In year one you hand over " + money(y1.cumPaid) + " and " + money(y1.cumInt) +
+      " of it is interest, so only " + money(y1.cumPaid - y1.cumInt) + " comes off the loan. " +
+      (crossover
+        ? "Principal does not overtake interest until year " + crossover + ". "
+        : "") +
+      "Across the whole loan you repay " + money(L.sim.totalPaid) + " to borrow " + money(P) +
+      ". Read this beside the equity table: the gap between what you have paid and the equity you hold is the cost of the money.";
+  }
+
+  function renderSnapshot(){
+    if(!lastCtx) return;
+    var c = lastCtx;
+    var maxY = Math.max(c.years, Math.ceil(c.a.payoffYears), Math.ceil(c.b.payoffYears));
+    var sl = $("snapYear");
+    sl.max = maxY;
+    $("snapMax").textContent = maxY + " yrs";
+    var y = Math.min(num("snapYear"), maxY);
+    $("outSnapYear").textContent = y;
+
+    var html = "";
+    [["htb", c.a, c.htbShare, c.htbCash, "Help to Buy"],
+     ["hgs", c.b, 0, c.hgsCash, "5% Deposit Scheme"]].forEach(function(cfg){
+      var key = cfg[0], L = cfg[1], share = cfg[2], settle = cfg[3], name = cfg[4];
+      var s0 = schedAt(L, y);
+      var val = c.value * Math.pow(1 + c.growth, y);
+      var gov = val * share;
+      var eq = val - s0.bal - gov;
+      var repaid = s0.cumPaid;
+      var outOfPocket = settle + repaid;
+      var net = eq + s0.off;
+
+      html += '<div class="scheme ' + key + '"><h3>' + name + '</h3>' +
+        '<p class="tag">Position after ' + y + (y === 1 ? " year" : " years") + '</p><table>' +
+        row("Cash at settlement", money(settle), "sub") +
+        row("Loan repayments since", money(repaid), "sub") +
+        row("Total out of pocket", money(outOfPocket), "hl") +
+        row("&nbsp;", "&nbsp;", "") +
+        row("House worth", money(val), "sub") +
+        row("Less loan owing", money(s0.bal), "sub") +
+        (share > 0 ? row("Less gov't share", money(gov), "sub") : "") +
+        row("Your equity", money(eq), "hl") +
+        (c.useOffset ? row("Cash still in offset", money(s0.off), "sub") +
+                       row("Equity + offset", money(net), "") : "") +
+        row("Interest paid so far", money(s0.cumInt), "sub") +
+        "</table></div>";
+    });
+    $("snapBody").innerHTML = html;
+
+    var L = (eqScheme === "htb") ? c.a : c.b;
+    var settle = (eqScheme === "htb") ? c.htbCash : c.hgsCash;
+    var sN = schedAt(L, y);
+    var valN = c.value * Math.pow(1 + c.growth, y);
+    var eqN = valN - sN.bal - valN * (eqScheme === "htb" ? c.htbShare : 0);
+    var out = settle + sN.cumPaid;
+
+    $("snapFlag").textContent =
+      "On the " + (eqScheme === "htb" ? "Help to Buy" : "5% Deposit") + " path, " + y + " years in you have put " +
+      money(out) + " into this property and hold " + money(eqN) + " of equity in a home worth " + money(valN) + ". " +
+      "The " + money(Math.abs(out - eqN)) + " difference is mostly interest (" + money(sN.cumInt) + ") plus the " +
+      "stamp duty and costs you paid at settlement, which buy you nothing you can sell. " +
+      "Equity here also includes " + money(valN - c.value) + " of assumed price growth, which is a projection, not a certainty.";
+  }
+
+  function renderSell(){
+    if(!lastCtx) return;
+    var c = lastCtx, isH = (eqScheme === "htb");
+    var L = isH ? c.a : c.b;
+    var share = isH ? c.htbShare : 0;
+    var settle = isH ? c.htbCash : c.hgsCash;
+    var comm = num("comm") / 100, other = num("sellCost");
+    var rentWk = num("rent"), rentPaid = 0, breakRent = null;
+    $("outComm").textContent = num("comm").toFixed(1) + "%";
+
+    var horizon = Math.max(c.years, Math.ceil(L.payoffYears));
+    var rows = [], breakEven = null, bestRet = null, bestRetY = null;
+
+    for(var y = 1; y <= horizon; y++){
+      var st = schedAt(L, y);
+      var sale = c.value * Math.pow(1 + c.growth, y);
+      var costs = sale * comm + other;
+      var gov = sale * share;
+      var back = sale - costs - st.bal - gov + st.off;
+      var inCash = settle + st.cumPaid + st.off;
+      var profit = back - inCash;
+      var ret = (inCash > 0 && back > 0) ? (Math.pow(back / inCash, 1 / y) - 1) * 100 : null;
+      rentPaid += rentWk * 52 * Math.pow(1 + c.growth, y - 1);   // rent you did NOT pay by owning
+      var withRent = profit + rentPaid;
+      if(breakEven === null && profit > 0) breakEven = y;
+      if(breakRent === null && withRent > 0) breakRent = y;
+      if(ret !== null && profit > 0 && (bestRet === null || ret > bestRet)){ bestRet = ret; bestRetY = y; }
+      rows.push({y:y, sale:sale, costs:costs, bal:st.bal, gov:gov, back:back, inCash:inCash,
+                 profit:profit, ret:ret, withRent:withRent});
+    }
+
+    var head = "<tr><th>Sell in year</th><th>Sale price</th><th>Selling costs</th><th>Loan payout</th>" +
+      (share > 0 ? "<th>Gov&rsquo;t share</th>" : "") +
+      "<th>Cash back</th><th>Profit on cash</th><th>Rent not paid</th><th>Profit vs renting</th></tr>";
+    var body = "";
+    rows.forEach(function(r){
+      var mark = (r.y === breakRent) ? ' style="font-weight:700;background:var(--accent-soft);"' : "";
+      body += "<tr" + mark + "><td>" + r.y + "</td><td>" + money(r.sale) + "</td><td>" + money(r.costs) + "</td>" +
+        "<td>" + money(r.bal) + "</td>" + (share > 0 ? "<td>" + money(r.gov) + "</td>" : "") +
+        "<td>" + money(r.back) + "</td>" +
+        "<td>" + (r.profit < 0 ? "\u2212" : "") + money(Math.abs(r.profit)) + "</td>" +
+        "<td>" + money(r.withRent - r.profit) + "</td>" +
+        "<td>" + (r.withRent < 0 ? "\u2212" : "") + money(Math.abs(r.withRent)) + "</td></tr>";
+    });
+    $("sellTable").innerHTML = head + body;
+
+    var last = rows[rows.length - 1];
+    $("sellFlag").textContent =
+      "On price growth alone, this only turns a cash profit " +
+      (breakEven ? "if you hold to year " + breakEven + "." : "at no point inside the term.") +
+      " That is the honest arithmetic: at " + (c.growth * 100).toFixed(1) + "% growth against " + c.rate.toFixed(1) +
+      "% interest" + (share > 0 ? " with the government taking " + (share * 100).toFixed(0) + "% of every dollar of growth" : "") +
+      ", the interest bill outruns the price rise. " +
+      (breakRent
+        ? "Counting the rent you are not paying, you are ahead of renting from year " + breakRent +
+          " onward, and by year " + last.y + " that reaches " + money(last.withRent) + ". That, not the sale price, is what owning is actually earning you."
+        : "Even counting rent saved, renting stays ahead across this whole term at these settings.") +
+      " Raise growth above your interest rate and the picture reverses quickly, which is the single assumption doing all the work here.";
+    var unusedFlag =
+      (breakEven
+        ? "At " + (c.growth * 100).toFixed(1) + "% growth you first come out ahead selling in year " + breakEven +
+          ". Before that, selling costs, stamp duty and early interest outweigh the price rise. "
+        : "At " + (c.growth * 100).toFixed(1) + "% growth this never turns a profit within the term. ") +
+      (bestRetY
+        ? "The best return on the cash you tied up is year " + bestRetY + " at " + bestRet.toFixed(1) +
+          "% a year, while the largest dollar profit is always the last row, " + money(last.profit) + " in year " + last.y +
+          ", because compounding keeps running. Those are two different questions and they have two different answers."
+        : "");
+
+    $("sellWarn").textContent =
+      "This is arithmetic on your growth assumption, not a prediction. Set growth to \u22122% and the table inverts. " +
+      "Real prices move in jumps and stalls rather than a smooth curve, so the year you happen to sell matters more than any average suggests. " +
+      "It also ignores that you still need somewhere to live, and your next purchase costs more in the same rising market." +
+      (isH ? " On Help to Buy you must also clear the government share at sale, which is why cash back is so much thinner." : "");
+  }
+
+  function setScheme(s){
+    eqScheme = s;
+    [$("segEquity"), $("segPay")].forEach(function(g){
+      Array.prototype.forEach.call(g.querySelectorAll("button"), function(b){
+        b.setAttribute("aria-pressed", String(b.dataset.scheme === s));
+      });
+    });
+    renderEquity();
+    renderPayments();
+    renderSnapshot();
+    renderSell();
+  }
+
+  function renderEquity(){
+    if(!lastCtx) return;
+    var c = lastCtx, isH = (eqScheme === "htb");
+    var L = isH ? c.a : c.b;
+    var share = isH ? c.htbShare : 0;
+    var horizon = Math.max(c.years, Math.ceil(L.payoffYears));
+    var at = function(y){ return schedAt(L, y); };
+    var marks = yearMarks(L);
+
+    var head = "<tr><th>Year</th><th>Property value</th><th>Loan owing</th>" +
+      (c.useOffset ? "<th>Offset cash</th>" : "") +
+      (isH ? "<th>Gov't share</th>" : "") +
+      "<th>Your equity</th><th>Your %</th></tr>";
+
+    var body = "";
+    marks.forEach(function(y){
+      var s = at(y);
+      var val = c.value * Math.pow(1 + c.growth, y);
+      var gov = val * share;
+      var eq = val - s.bal - gov;
+      var pct = val > 0 ? (eq / val * 100) : 0;
+      var barW = Math.max(0, Math.min(100, pct));
+      body += "<tr><td>" + y + "</td><td>" + money(val) + "</td><td>" + money(s.bal) + "</td>" +
+        (c.useOffset ? "<td>" + money(s.off) + "</td>" : "") +
+        (isH ? "<td>" + money(gov) + "</td>" : "") +
+        "<td>" + money(eq) + "</td>" +
+        '<td><span style="display:inline-block;vertical-align:middle;width:46px;height:7px;background:var(--surface-2);border-radius:4px;overflow:hidden;margin-right:6px;">' +
+        '<span style="display:block;height:100%;width:' + barW.toFixed(0) + '%;background:var(--' + (isH ? "htb" : "accent") + ');"></span></span>' +
+        pct.toFixed(0) + "%</td></tr>";
+    });
+
+    $("equityTable").innerHTML = head + body;
+
+    var startEq = c.value * (isH ? c.htbDep : c.hgsDep);
+    var endVal = c.value * Math.pow(1 + c.growth, horizon);
+    var endEq = endVal * (1 - share);
+    var govGain = isH ? (endVal - c.value) * share : 0;
+
+    var base = isH
+      ? "You start with " + money(startEq) + " of equity and finish owning " +
+        (100 - c.htbShare * 100).toFixed(0) + "% of a home worth " + money(endVal) + ", that is " + money(endEq) +
+        ". The government's share grows with the property, so of the " + money(endVal - c.value) +
+        " of capital growth in this projection, " + money(govGain) + " accrues to them. You can buy their share back in steps of 5% or more, at market value on the day."
+      : "You start with " + money(startEq) + " of equity and own the whole property, so all " +
+        money(endVal - c.value) + " of projected capital growth is yours. The trade-off is the larger loan and the extra " +
+        money(c.hgsCash - c.htbCash) + " of cash needed up front.";
+
+    if(c.useOffset){
+      base += " Offset cash is shown separately because it is savings, not home equity — it stays withdrawable, and it is what is keeping the loan column falling this fast.";
+    }
+    $("equityFlag").textContent = base;
+  }
+
+  Array.prototype.forEach.call($("segFreq").querySelectorAll("button"), function(btn){
+    btn.addEventListener("click", function(){
+      freq = parseInt(btn.dataset.freq, 10);
+      Array.prototype.forEach.call($("segFreq").querySelectorAll("button"), function(b){
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+      var cfg = freq === 52 ? {max:400, step:5} : (freq === 26 ? {max:800, step:10} : {max:1500, step:25});
+      var ex = $("extra");
+      ex.max = cfg.max; ex.step = cfg.step;
+      if(num("extra") > cfg.max) ex.value = cfg.max;
+      $("scaleExtra").textContent = money(cfg.max) + " per " +
+        (freq === 52 ? "week" : freq === 26 ? "fortnight" : "month");
+      render();
+    });
+  });
+
+  [$("segEquity"), $("segPay")].forEach(function(g){
+    Array.prototype.forEach.call(g.querySelectorAll("button"), function(btn){
+      btn.addEventListener("click", function(){ setScheme(btn.dataset.scheme); });
+    });
+  });
+
+  // input wiring
+  ["price","land","build","buyer","misc","miscb","htbShare","htbDep","hgsDep","rate","term","growth","extra","offset0","offsetAdd","snapYear","comm","sellCost","rent","ucVal"].forEach(function(id){
+    $(id).addEventListener("input", render);
+    $(id).addEventListener("change", render);
+  });
+
+  $("underConstruction").addEventListener("change", function(){
+    $("f-ucval").classList.toggle("hidden", !this.checked);
+    render();
+  });
+
+  Array.prototype.forEach.call($("segType").querySelectorAll("button"), function(btn){
+    btn.addEventListener("click", function(){
+      mode = btn.dataset.type;
+      Array.prototype.forEach.call($("segType").querySelectorAll("button"), function(b){
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+      var build = (mode === "build");
+      $("f-price").classList.toggle("hidden", build);
+      $("f-land").classList.toggle("hidden", !build);
+      $("f-build").classList.toggle("hidden", !build);
+      $("f-miscb").classList.toggle("hidden", !build);
+      $("f-uc").classList.toggle("hidden", build);
+      $("f-ucval").classList.toggle("hidden", build || !$("underConstruction").checked);
+      // scheme caps: 30% max on established homes, 40% on new builds
+      var sh = $("htbShare");
+      sh.max = build ? 40 : 30;
+      sh.value = build ? 40 : 30;
+      $("scaleHtbShare").innerHTML = build ? "40% max &mdash; new build" : "30% max &mdash; established";
+      $("misc").value = build ? 5000 : 3730;
+      render();
+    });
+  });
+
+  window.__planner = {
+    ids: ["price","land","build","buyer","misc","miscb","ucVal","htbShare","htbDep","hgsDep",
+          "rate","term","growth","extra","offset0","offsetAdd","snapYear","comm","sellCost","rent"],
+    get: function(){
+      var f = {};
+      this.ids.forEach(function(id){ if($(id)) f[id] = $(id).value; });
+      f.underConstruction = $("underConstruction").checked;
+      return {mode:mode, eqScheme:eqScheme, freq:freq, fields:f};
+    },
+    set: function(st){
+      if(!st) return;
+      if(st.mode){ var b = $("segType").querySelector('button[data-type="' + st.mode + '"]'); if(b) b.click(); }
+      if(st.freq){ var fb = $("segFreq").querySelector('button[data-freq="' + st.freq + '"]'); if(fb) fb.click(); }
+      var f = st.fields || {};
+      this.ids.forEach(function(id){ if(f[id] !== undefined && $(id)) $(id).value = f[id]; });
+      if(f.underConstruction !== undefined){
+        $("underConstruction").checked = !!f.underConstruction;
+        $("f-ucval").classList.toggle("hidden", !f.underConstruction || mode === "build");
+      }
+      render();
+      if(st.eqScheme) setScheme(st.eqScheme);
+    }
+  };
+
+  render();
+})();
+</script>
+
+<script>
+/* ---- Rate change tracker (independent of the planner) ---- */
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  function money(n){ return "$" + Math.round(isFinite(n)?n:0).toLocaleString("en-AU"); }
+  function money2(n){ return "$" + (isFinite(n)?n:0).toLocaleString("en-AU",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+  function val(id){ var v = parseFloat($(id).value); return isFinite(v) ? v : 0; }
+  function pmt(P, r, n){ if(P<=0||n<=0) return 0; if(r===0) return P/n; return P*r/(1-Math.pow(1+r,-n)); }
+
+  var changes = [];
+
+  // quarters are the working unit: 0.25 of a year
+  function qLabel(y){
+    var q = Math.round(y*4);
+    return "yr " + Math.floor(q/4) + ", Q" + ((q % 4) + 1);
+  }
+
+  // repayment is recalculated over the REMAINING term at each change, as a variable loan does
+  function run(P, startRate, term, list){
+    var n = term*12, bal = P, rate = startRate;
+    var pay = pmt(P, rate/1200, n);
+    var totalInt = 0, totalPaid = 0, m = 0, maxPay = pay, minPay = pay;
+    var sorted = list.slice().sort(function(a,b){ return a.year - b.year; });
+    var idx = 0, segStart = 0, segInt = 0, segRate = rate, segPay = pay, segs = [];
+
+    while(bal > 0.005 && m < n*1.6){
+      while(idx < sorted.length && Math.round(sorted[idx].year*4)*3 === m && m > 0){
+        segs.push({from:segStart/12, to:m/12, rate:segRate, pay:segPay, interest:segInt});
+        rate = sorted[idx].rate;
+        pay = pmt(bal, rate/1200, Math.max(1, n-m));
+        maxPay = Math.max(maxPay, pay); minPay = Math.min(minPay, pay);
+        segStart = m; segInt = 0; segRate = rate; segPay = pay;
+        idx++;
+      }
+      var interest = bal*rate/1200;
+      if(pay <= interest){ break; }
+      var payment = Math.min(pay, bal+interest);
+      bal = Math.max(0, bal-(payment-interest));
+      totalInt += interest; totalPaid += payment; segInt += interest;
+      m++;
+    }
+    segs.push({from:segStart/12, to:m/12, rate:segRate, pay:segPay, interest:segInt});
+    return {segs:segs, totalInterest:totalInt, totalPaid:totalPaid, years:m/12, maxPay:maxPay, minPay:minPay};
+  }
+
+  function rowsHTML(){
+    var h = "";
+    changes.forEach(function(c, i){
+      h += '<div class="grid" style="margin-top:10px;align-items:end;">' +
+        '<div class="field"><label>Change ' + (i+1) + ' &mdash; from <span class="hint">' + qLabel(c.year) + '</span></label>' +
+        '<input type="number" class="rtY" data-i="' + i + '" value="' + c.year + '" min="0.25" max="40" step="0.25"></div>' +
+        '<div class="field"><label>New rate <span class="hint">% p.a.</span></label>' +
+        '<input type="number" class="rtR" data-i="' + i + '" value="' + c.rate + '" min="0.1" max="20" step="0.1"></div>' +
+        '<div class="field"><label>&nbsp;</label><button type="button" class="rtDel" data-i="' + i + '" ' +
+        'style="font:inherit;font-family:system-ui,sans-serif;font-size:0.85rem;padding:9px 14px;border:1px solid var(--line);' +
+        'background:var(--surface-2);color:var(--ink-2);border-radius:7px;cursor:pointer;">Remove</button></div></div>';
+    });
+    $("rtRows").innerHTML = h;
+    Array.prototype.forEach.call($("rtRows").querySelectorAll(".rtY"), function(el){
+      el.addEventListener("input", function(){ changes[+el.dataset.i].year = parseFloat(el.value)||1; draw(); });
+    });
+    Array.prototype.forEach.call($("rtRows").querySelectorAll(".rtR"), function(el){
+      el.addEventListener("input", function(){ changes[+el.dataset.i].rate = parseFloat(el.value)||0.1; draw(); });
+    });
+    Array.prototype.forEach.call($("rtRows").querySelectorAll(".rtDel"), function(el){
+      el.addEventListener("click", function(){ changes.splice(+el.dataset.i,1); rowsHTML(); draw(); });
+    });
+  }
+
+  function tbl(r, P){
+    return "<table>" +
+      "<tr class=\"hl\"><td class=\"k\">Loan amount</td><td class=\"v\">" + money(P) + "</td></tr>" +
+      "<tr><td class=\"k\">Starting repayment</td><td class=\"v\">" + money2(r.segs[0].pay) + "</td></tr>" +
+      "<tr><td class=\"k\">Highest repayment</td><td class=\"v\">" + money2(r.maxPay) + "</td></tr>" +
+      "<tr><td class=\"k\">Lowest repayment</td><td class=\"v\">" + money2(r.minPay) + "</td></tr>" +
+      "<tr class=\"rule\"><td class=\"k\">Total interest</td><td class=\"v\">" + money(r.totalInterest) + "</td></tr>" +
+      "<tr class=\"total\"><td class=\"k\">Total repaid</td><td class=\"v\">" + money(r.totalPaid) + "</td></tr>" +
+    "</table>";
+  }
+
+  function draw(){
+    var P = val("rtLoan"), term = Math.max(1, val("rtTerm")), r0 = val("rtStart");
+    var a = run(P, r0, term, changes);
+    var b = run(P, r0, term, []);
+
+    $("rtTagA").textContent = changes.length + (changes.length === 1 ? " rate change" : " rate changes") + " over " + term + " years";
+    $("rtTagB").textContent = "Flat " + r0.toFixed(2) + "% for the full term";
+    $("rtBodyA").innerHTML = tbl(a, P);
+    $("rtBodyB").innerHTML = tbl(b, P);
+
+    var diff = a.totalInterest - b.totalInterest;
+    $("rtFlag").className = "flag" + (diff <= 0 ? " ok" : "");
+    $("rtFlag").textContent = changes.length === 0
+      ? "Add a rate change above, or try one of the presets, to see what movement costs."
+      : "This scenario costs " + money(Math.abs(diff)) + (diff >= 0 ? " more" : " less") +
+        " in interest than the rate never moving, and your repayment ranges from " + money2(a.minPay) +
+        " to " + money2(a.maxPay) + " a month. Note the repayment is recalculated at each change over the term you have left, " +
+        "so a rise late in the loan moves the repayment less than the same rise early on.";
+
+    var h = "<tr><th>From</th><th>To</th><th>Rate</th><th>Monthly repayment</th><th>Interest in period</th></tr>";
+    a.segs.forEach(function(sg){
+      if(sg.to - sg.from < 0.01) return;
+      h += "<tr><td>" + qLabel(sg.from) + "</td><td>" + qLabel(sg.to) + "</td><td>" + sg.rate.toFixed(2) + "%</td><td>" +
+        money2(sg.pay) + "</td><td>" + money(sg.interest) + "</td></tr>";
+    });
+    $("rtTable").innerHTML = h;
+
+    var sh = "<tr><th>Rate</th><th>Monthly repayment</th><th>Change vs now</th><th>Total interest</th></tr>";
+    [-1,-0.5,0,0.5,1,2,3].forEach(function(d){
+      var rr = r0 + d; if(rr < 0.1) return;
+      var pay = pmt(P, rr/1200, term*12);
+      var basePay = pmt(P, r0/1200, term*12);
+      sh += "<tr" + (d === 0 ? ' style="font-weight:700;"' : "") + "><td>" + rr.toFixed(2) + "%</td><td>" + money2(pay) +
+        "</td><td>" + (d === 0 ? "&mdash;" : (pay>basePay?"+":"\u2212") + money(Math.abs(pay-basePay)) + " /mth") +
+        "</td><td>" + money(pay*term*12 - P) + "</td></tr>";
+    });
+    $("rtSens").innerHTML = sh;
+  }
+
+  ["rtLoan","rtTerm","rtStart"].forEach(function(id){ $(id).addEventListener("input", draw); });
+  $("rtAdd").addEventListener("click", function(){
+    changes.push({year: changes.length ? changes[changes.length-1].year + 0.25 : 0.25, rate: val("rtStart") + 0.25});
+    rowsHTML(); draw();
+  });
+
+  Array.prototype.forEach.call($("rtPresets").querySelectorAll("button"), function(btn){
+    btn.addEventListener("click", function(){
+      var pr = btn.dataset.preset, r0 = val("rtStart");
+      if(pr === "clear"){ changes = []; }
+      else if(pr === "up2"){
+        changes = [];
+        for(var q = 1; q <= 8; q++) changes.push({year: q*0.25, rate: r0 + q*0.25});
+      }
+      else if(pr === "cycle"){
+        changes = [{year:0.5,rate:Math.max(0.5,r0-0.25)},{year:1,rate:Math.max(0.5,r0-0.5)},
+                   {year:1.5,rate:Math.max(0.5,r0-0.75)},{year:3,rate:Math.max(0.5,r0-0.25)},
+                   {year:4.5,rate:r0+0.25},{year:6,rate:r0+0.75}];
+      }
+      else if(pr === "pull"){
+        var c = window.plannerCtx;
+        if(c){
+          $("rtLoan").value = Math.round(c.hgsP);
+          $("rtTerm").value = c.years;
+          $("rtStart").value = c.rate;
+        }
+      }
+      rowsHTML(); draw();
+    });
+  });
+
+  // tab switching
+  Array.prototype.forEach.call($("tabs").querySelectorAll("button"), function(btn){
+    btn.addEventListener("click", function(){
+      var t = btn.dataset.tab;
+      Array.prototype.forEach.call($("tabs").querySelectorAll("button"), function(b){
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+      $("tabPlanner").hidden = (t !== "planner");
+      $("tabRates").hidden = (t !== "rates");
+      window.scrollTo(0,0);
+    });
+  });
+
+  window.__rt = {
+    get: function(){ return {loan:$("rtLoan").value, term:$("rtTerm").value, start:$("rtStart").value, changes:changes}; },
+    set: function(st){
+      if(!st) return;
+      if(st.loan !== undefined) $("rtLoan").value = st.loan;
+      if(st.term !== undefined) $("rtTerm").value = st.term;
+      if(st.start !== undefined) $("rtStart").value = st.start;
+      changes = Array.isArray(st.changes) ? st.changes.slice() : [];
+      rowsHTML(); draw();
+    }
+  };
+
+  rowsHTML(); draw();
+})();
+</script>
+
+<script>
+/* ---- persistence: browser storage + JSON export/import ---- */
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var KEY = "vicFhbPlanner.v1", timer = null, downloads = null;
+
+  function note(el, t){ el.textContent = t; }
+  function stamp(){
+    var d = new Date();
+    return d.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+  }
+
+  function snapshot(){
+    return {format:"vic-fhb-planner", version:1, savedAt:new Date().toISOString(),
+            planner:window.__planner.get(), rates:window.__rt.get()};
+  }
+  function apply(st){
+    if(!st || typeof st !== "object") throw new Error("not a planner file");
+    if(st.format && st.format !== "vic-fhb-planner") throw new Error("different kind of file");
+    if(st.planner) window.__planner.set(st.planner);
+    if(st.rates) window.__rt.set(st.rates);
+  }
+
+  function save(){
+    try{
+      localStorage.setItem(KEY, JSON.stringify(snapshot()));
+      note($("saveNote"), "Saved in this browser at " + stamp());
+    }catch(e){
+      note($("saveNote"), "This browser is not allowing local saving \u2014 use the file export");
+    }
+    if(!$("settingsPanel").hidden) fillBox();
+  }
+  function queueSave(e){
+    if(e && e.target && e.target.closest && e.target.closest("#settingsPanel")) return;
+    clearTimeout(timer); timer = setTimeout(save, 600);
+  }
+  document.addEventListener("input", queueSave, true);
+  document.addEventListener("change", queueSave, true);
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.tagName === "BUTTON") queueSave(e);
+  }, true);
+
+  function fillBox(){ $("jsonBox").value = JSON.stringify(snapshot(), null, 2); }
+
+  $("btnSettings").addEventListener("click", function(){
+    var pnl = $("settingsPanel");
+    pnl.hidden = !pnl.hidden;
+    if(!pnl.hidden){ fillBox(); pnl.scrollIntoView({block:"nearest"}); }
+  });
+
+  $("btnDownload").addEventListener("click", async function(){
+    var data = JSON.stringify(snapshot(), null, 2);
+    var name = "vic-planner-" + new Date().toISOString().slice(0,10) + ".json";
+    if(downloads){
+      try{ await downloads.save({filename:name, data:data});
+           note($("importNote"), "Saved \u2014 check your downloads."); return; }
+      catch(err){ note($("importNote"), "Download declined or unavailable \u2014 copy the text instead."); return; }
+    }
+    try{
+      var blob = new Blob([data], {type:"application/json"});
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = name;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+      note($("importNote"), "Downloaded " + name);
+    }catch(err){
+      note($("importNote"), "Download blocked here \u2014 copy the text below instead.");
+    }
+  });
+
+  $("btnCopy").addEventListener("click", function(){
+    fillBox();
+    var box = $("jsonBox");
+    box.select();
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(box.value).then(
+        function(){ note($("importNote"), "Copied to clipboard."); },
+        function(){ note($("importNote"), "Select the text and copy manually."); });
+    } else {
+      note($("importNote"), "Select the text and copy manually.");
+    }
+  });
+
+  $("fileImport").addEventListener("change", function(){
+    var f = this.files && this.files[0];
+    if(!f) return;
+    var r = new FileReader();
+    r.onload = function(){
+      try{ apply(JSON.parse(r.result)); save(); note($("importNote"), "Loaded " + f.name); }
+      catch(err){ note($("importNote"), "Could not read that file: " + err.message); }
+    };
+    r.onerror = function(){ note($("importNote"), "Could not read that file."); };
+    r.readAsText(f);
+    this.value = "";
+  });
+
+  $("btnApply").addEventListener("click", function(){
+    try{ apply(JSON.parse($("jsonBox").value)); save(); note($("importNote"), "Applied."); }
+    catch(err){ note($("importNote"), "That text is not valid planner JSON."); }
+  });
+
+  $("btnReset").addEventListener("click", function(){
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    location.reload();
+  });
+
+  // restore on load
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){
+      apply(JSON.parse(raw));
+      var when = JSON.parse(raw).savedAt;
+      note($("saveNote"), "Restored your last figures" + (when ? " from " + new Date(when).toLocaleDateString() : ""));
+    }
+  }catch(e){ /* corrupt or unavailable: carry on with defaults */ }
+
+  // downloads capability, when the page is published on claude.ai
+  if(window.claude && typeof window.claude.use === "function"){
+    window.claude.use("downloads").then(function(d){ downloads = d; }, function(){});
+  }
+})();
+</script>
+</body>
+</html>
